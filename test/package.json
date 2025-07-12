@@ -1,0 +1,10 @@
+{
+  "name": "@shmup-yours/test",
+  "version": "0.1.0",
+  "private": true,
+  "main": "index.js",
+  "description": "End-to-end and integration tests for shmup-yours",
+  "keywords": ["shmup-yours", "test", "e2e", "integration"],
+  "author": "jessechoward",
+  "license": "MIT"
+}

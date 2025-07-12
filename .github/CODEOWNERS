@@ -1,0 +1,45 @@
+
+############################################################
+## 🛡️ CODEOWNERS for shmup-yours
+## Place this file in .github/ or at the repo root
+## Docs: https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
+############################################################
+
+### 🌍 Global Owners
+# All files in the repository
+* @jessechoward
+
+### 📁 Folder Owners
+# Assign owners for specific folders
+/frontend/ @jessechoward
+/backend/ @jessechoward
+/test/ @jessechoward
+
+### 👥 Multiple Owners & Teams
+# Assign multiple owners (space-separated)
+# /frontend/ @jessechoward @anotheruser
+# Assign GitHub teams (prefix with @org/)
+# /backend/ @yourorg/backend-team
+
+### 🏷️ File Type Owners
+# Use wildcards for file types
+# *.js @jessechoward
+
+### 🔒 Role-Based Permissions (for future use)
+# CODEOWNERS only specifies who reviews/approves PRs for files/folders.
+# To enforce who can merge to protected branches, use GitHub branch protection rules:
+# https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/defining-the-mergeability-of-pull-requests/about-code-owner-required-reviews
+#
+# Common roles:
+#   👑 Owners: Must review/approve changes to their files
+#   ✅ Approvers: Can approve PRs (must be listed as codeowners)
+#   🔐 Mergers: Can merge to protected branches (set via branch protection, not CODEOWNERS)
+#
+# Example: Require code owner review before merging to main
+#   - Set branch protection on main
+#   - Enable "Require review from Code Owners"
+#   - Only listed owners/teams can approve/merge
+
+### 📚 More Advanced Patterns
+# For more advanced usage, see:
+# https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners

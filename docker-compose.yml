@@ -1,0 +1,57 @@
+# docker-compose.yml - Development orchestration for shmup-yours monorepo
+# This file defines services for frontend and backend development
+# Each service uses the same Dockerfile.dev and mounts code for live editing
+# Adjust ports, volumes, and commands as needed for your workflow
+
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    container_name: shmup-backend-dev
+    working_dir: /app/backend
+    volumes:
+      - ./backend:/app/backend
+      # Mount backend workspace test folder for unit tests
+      - ./backend/test:/app/backend/test
+      # Mount backend workspace package.json for service-specific scripts and dependencies
+      - ./backend/package.json:/app/backend/package.json
+      # Mount root package.json and yarn.lock for Yarn workspaces resolution
+      - ./package.json:/app/package.json
+      - ./yarn.lock:/app/yarn.lock
+    ports:
+      - "4000:4000" # Expose backend port
+    command: ["yarn", "workspace", "@shmup-yours/backend", "run", "dev"] # Replace with your backend dev script
+    environment:
+      - NODE_ENV=development
+    # Add more environment variables as needed
+
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    container_name: shmup-frontend-dev
+    working_dir: /app/frontend
+    volumes:
+      - ./frontend:/app/frontend
+      # Mount frontend workspace test folder for unit tests
+      - ./frontend/test:/app/frontend/test
+      # Mount frontend workspace package.json for service-specific scripts and dependencies
+      - ./frontend/package.json:/app/frontend/package.json
+      # Mount root package.json and yarn.lock for Yarn workspaces resolution
+      - ./package.json:/app/package.json
+      - ./yarn.lock:/app/yarn.lock
+    ports:
+      - "3000:3000" # Expose frontend port
+    command: ["yarn", "workspace", "@shmup-yours/frontend", "run", "dev"] # Replace with your frontend dev script
+    environment:
+      - NODE_ENV=development
+    # Add more environment variables as needed
+
+# Notes:
+# - Each service mounts only its workspace for live code editing and hot reload.
+# - The default command assumes you have a "dev" script in each workspace's package.json.
+# - You can add more services, volumes, or networks as your project grows.
+# - For production, use a separate Dockerfile and compose file with optimized build steps.

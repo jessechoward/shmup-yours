@@ -1,0 +1,26 @@
+# Dockerfile.dev - Development container for shmup-yours monorepo
+# Uses official Node.js Alpine image and installs Yarn via Corepack
+# This container is intended for local development only
+
+FROM node:alpine
+
+# Enable and install stable Yarn via Corepack (included in Node.js >=16.10)
+RUN corepack enable && corepack prepare yarn@stable --activate
+
+# Set working directory inside the container
+WORKDIR /app
+
+# Copy package manifests for dependency install (avoid copying all code for faster builds)
+COPY package.json yarn.lock ./
+
+# Install dependencies (will use Yarn workspaces)
+RUN yarn install
+
+# Copy the rest of the code (if needed for build steps)
+# COPY . .
+
+# Expose ports for frontend and backend (adjust as needed)
+EXPOSE 3000 4000
+
+# Default command (override in docker-compose for dev)
+CMD ["sleep", "infinity"]

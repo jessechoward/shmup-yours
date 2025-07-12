@@ -1,0 +1,9 @@
+{
+  "name": "shmup-yours-monorepo",
+  "private": true,
+  "workspaces": [
+    "frontend",
+    "backend",
+    "test"
+  ]
+}
