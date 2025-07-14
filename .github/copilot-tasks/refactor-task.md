@@ -3,6 +3,53 @@
 ## 🔧 Refactoring Objective
 Clear description of what code needs to be improved without changing behavior.
 
+## 🚀 Development Environment Setup
+**Quality Gates Activation:**
+```bash
+# Enable Husky hooks for quality enforcement
+yarn install  # Installs dependencies including hook infrastructure
+yarn workspace backend install
+yarn workspace frontend install
+
+# Verify quality gates are active
+yarn lint:all    # Should run ESLint across all workspaces
+yarn test:all    # Should run tests (if configured)
+```
+
+**Hook Verification:**
+```bash
+# Test that quality gates are working
+echo "console.log('test')" > temp-test-file.js
+git add temp-test-file.js
+git commit -m "test quality gates" --dry-run
+# Should trigger linting and other quality checks
+rm temp-test-file.js
+```
+
+## 🛡️ Quality Gate Compliance
+**Pre-Refactoring Validation:**
+- [ ] Quality hooks are active and functional
+- [ ] ESLint configuration is working (`yarn lint:all`)
+- [ ] Test infrastructure is operational
+- [ ] Workspace isolation is maintained (yarn workspaces)
+
+**Common Quality Violations & Quick Fixes:**
+```bash
+# ESLint violations - Auto-fix most issues:
+yarn workspace frontend eslint src/ --fix
+yarn workspace backend eslint src/ --fix
+
+# Package manager violations - Use yarn only:
+# ❌ Don't use: npm install
+# ✅ Use instead: yarn install
+```
+
+**Violation Resolution:**
+- Educational error messages will guide you to quick fixes
+- 90% of violations have copy-paste resolution commands
+- Escalate after 5 minutes if resolution unclear
+- Reference: `.github/hooks/README.md` for detailed guidance
+
 ## 📋 Refactoring Scope
 **Code to Refactor:**
 - `path/to/file.js` - Specific functions or classes
@@ -71,6 +118,14 @@ function formatOutput(result) { ... }
 - Test coverage requirements
 
 ## ✅ Definition of Done
+**Quality Compliance (Required for all tasks):**
+- [ ] All commits pass quality gates (ESLint, tests, etc.)
+- [ ] No package manager violations (yarn-only enforcement)
+- [ ] Educational error messages reviewed if violations occurred
+- [ ] Quality hook performance remains under 30 seconds
+- [ ] No emergency overrides used (except documented emergencies)
+
+**Refactoring Success:**
 - [ ] Code is more readable and maintainable
 - [ ] All existing tests pass
 - [ ] No breaking changes to public interfaces
@@ -78,6 +133,12 @@ function formatOutput(result) { ... }
 - [ ] Code follows project conventions
 - [ ] Complexity reduced (if applicable)
 - [ ] Documentation updated (if needed)
+
+**Pre-Commit Verification:**
+- [ ] `git commit` completes without quality gate failures
+- [ ] Hook execution time is reasonable (<30 seconds)
+- [ ] All code follows project conventions automatically enforced
+- [ ] No `--no-verify` flags used (unless emergency documented)
 
 ## 🧪 Testing Strategy
 **Verification Approach:**
@@ -101,7 +162,13 @@ function formatOutput(result) { ... }
 - Other areas that might benefit from similar improvements
 - Dependencies that might need updating
 
+**Resolution Playbook References:**
+- Package Manager Issues: `.github/hooks/package-manager-errors.md`
+- ESLint/Quality Issues: `.github/hooks/eslint-errors.md`  
+- Performance Issues: `.github/hooks/performance-errors.md`
+- Emergency Procedures: `.github/hooks/emergency-overrides.md`
+
 ---
 **Time Box:** 2-4 hours (depending on complexity)  
 **Agent Focus:** Code improvement only, no new features  
-**Success Metric:** Cleaner code with identical behavior
+**Success Metric:** Cleaner code with identical behavior, quality hooks compliant

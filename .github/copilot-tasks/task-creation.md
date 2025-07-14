@@ -1,7 +1,29 @@
 # Task Creation Template
 
+## 🛡️ Quality Gate Compliance
+**Pre-Task Validation:**
+- [ ] Quality hooks are active and functional
+- [ ] Documentation tools are available
+
+**Resolution Playbook References:**
+- Package Manager Issues: `.github/hooks/package-manager-errors.md`
+- ESLint/Quality Issues: `.github/hooks/eslint-errors.md`
+- Performance Issues: `.github/hooks/performance-errors.md`
+- Emergency Procedures: `.github/hooks/emergency-overrides.md`
+
 ## 🔧 Creation Objective
 Convert story analysis into specific, executable 5-minute tasks with complete context.
+
+## 🛡️ Quality Gate Compliance
+**Pre-Task Validation:**
+- [ ] Quality hooks are active and functional
+- [ ] Documentation tools are available
+
+**Resolution Playbook References:**
+- Package Manager Issues: `.github/hooks/package-manager-errors.md`
+- ESLint/Quality Issues: `.github/hooks/eslint-errors.md`
+- Performance Issues: `.github/hooks/performance-errors.md`
+- Emergency Procedures: `.github/hooks/emergency-overrides.md`
 
 ## 📋 Source Analysis
 **Story Analysis Task:** #123  

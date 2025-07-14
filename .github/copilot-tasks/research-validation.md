@@ -3,6 +3,17 @@
 ## 🔍 Validation Objective
 Review and validate findings from a research task, providing alternative perspectives and recommendations.
 
+## 🛡️ Quality Gate Compliance
+**Pre-Task Validation:**
+- [ ] Quality hooks are active and functional
+- [ ] Documentation tools are available
+
+**Resolution Playbook References:**
+- Package Manager Issues: `.github/hooks/package-manager-errors.md`
+- ESLint/Quality Issues: `.github/hooks/eslint-errors.md`
+- Performance Issues: `.github/hooks/performance-errors.md`
+- Emergency Procedures: `.github/hooks/emergency-overrides.md`
+
 ## 📋 Source Research
 **Original Research Task:** #123 (link to research task)  
 **Research Question:** Copy the original research question  
@@ -13,6 +24,17 @@ Review and validate findings from a research task, providing alternative perspec
 - Option B: Pros/Cons  
 - Recommendation: X because Y
 ```
+
+## 🛡️ Quality Gate Compliance
+**Pre-Task Validation:**
+- [ ] Quality hooks are active and functional
+- [ ] Documentation tools are available
+
+**Resolution Playbook References:**
+- Package Manager Issues: `.github/hooks/package-manager-errors.md`
+- ESLint/Quality Issues: `.github/hooks/eslint-errors.md`
+- Performance Issues: `.github/hooks/performance-errors.md`
+- Emergency Procedures: `.github/hooks/emergency-overrides.md`
 
 ## 🎯 Validation Focus
 **Critical Analysis Areas:**
@@ -27,6 +49,17 @@ Review and validate findings from a research task, providing alternative perspec
 - Are there simpler alternatives?
 - What are the hidden risks or costs?
 - Does this align with project constraints?
+
+## 🛡️ Quality Gate Compliance
+**Pre-Task Validation:**
+- [ ] Quality hooks are active and functional
+- [ ] Documentation tools are available
+
+**Resolution Playbook References:**
+- Package Manager Issues: `.github/hooks/package-manager-errors.md`
+- ESLint/Quality Issues: `.github/hooks/eslint-errors.md`
+- Performance Issues: `.github/hooks/performance-errors.md`
+- Emergency Procedures: `.github/hooks/emergency-overrides.md`
 
 ## 🔧 Validation Approach
 **Independent Analysis:**

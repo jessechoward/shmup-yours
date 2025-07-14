@@ -3,6 +3,17 @@
 ## 🔄 Rollback Objective
 Quickly revert changes that break existing functionality or don't meet quality standards.
 
+## 🛡️ Quality Gate Compliance
+**Pre-Task Validation:**
+- [ ] Quality hooks are active and functional
+- [ ] Documentation tools are available
+
+**Resolution Playbook References:**
+- Package Manager Issues: `.github/hooks/package-manager-errors.md`
+- ESLint/Quality Issues: `.github/hooks/eslint-errors.md`
+- Performance Issues: `.github/hooks/performance-errors.md`
+- Emergency Procedures: `.github/hooks/emergency-overrides.md`
+
 ## 📋 Rollback Trigger
 **Failed Task:** #123  
 **Issue Type:**
@@ -28,6 +39,17 @@ Revert all changes from current story:
 - Documentation updates
 ```
 
+## 🛡️ Quality Gate Compliance
+**Pre-Task Validation:**
+- [ ] Quality hooks are active and functional
+- [ ] Documentation tools are available
+
+**Resolution Playbook References:**
+- Package Manager Issues: `.github/hooks/package-manager-errors.md`
+- ESLint/Quality Issues: `.github/hooks/eslint-errors.md`
+- Performance Issues: `.github/hooks/performance-errors.md`
+- Emergency Procedures: `.github/hooks/emergency-overrides.md`
+
 ## 🔧 Rollback Execution
 **Git Commands:**
 ```bash
@@ -43,6 +65,17 @@ git revert <story-start-commit>..<current-commit>
 - [ ] No console errors
 - [ ] Performance baseline restored
 - [ ] Integration points working
+
+## 🛡️ Quality Gate Compliance
+**Pre-Task Validation:**
+- [ ] Quality hooks are active and functional
+- [ ] Documentation tools are available
+
+**Resolution Playbook References:**
+- Package Manager Issues: `.github/hooks/package-manager-errors.md`
+- ESLint/Quality Issues: `.github/hooks/eslint-errors.md`
+- Performance Issues: `.github/hooks/performance-errors.md`
+- Emergency Procedures: `.github/hooks/emergency-overrides.md`
 
 ## 📋 Post-Rollback Analysis
 **Root Cause (30 seconds):**

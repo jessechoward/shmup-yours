@@ -3,6 +3,29 @@
 ## 🔗 Dependency Objective
 Manage execution order and data flow between related 5-minute tasks.
 
+## 🚀 Development Environment Setup
+**Quality Gates Activation:**
+```bash
+# Enable Husky hooks for quality enforcement
+yarn install  # Installs dependencies including hook infrastructure
+yarn workspace backend install
+yarn workspace frontend install
+
+# Verify quality gates are active
+yarn lint:all    # Should run ESLint across all workspaces
+yarn test:all    # Should run tests (if configured)
+```
+
+## 🛡️ Quality Gate Compliance
+**Pre-Coordination Validation:**
+- [ ] Quality hooks are active and functional
+- [ ] Documentation tools are available
+- [ ] Workspace isolation is maintained (yarn workspaces)
+
+**Violation Resolution:**
+- Educational error messages will guide you to quick fixes
+- Reference: `.github/hooks/README.md` for detailed guidance
+
 ## 📋 Task Dependencies
 **Primary Task:** #123 [Backend API implementation]  
 **Dependent Tasks:** 
@@ -45,6 +68,11 @@ component GameJoinButton { ... }
 ```
 
 ## ✅ Dependency Validation
+**Quality Compliance (Required for all tasks):**
+- [ ] All commits pass quality gates (documentation linting, etc.)
+- [ ] Quality hook performance remains under 30 seconds
+- [ ] No emergency overrides used (except documented emergencies)
+
 **Before Starting Dependent Task:**
 - [ ] Prerequisite task marked complete
 - [ ] Output format matches expected input
@@ -56,7 +84,13 @@ component GameJoinButton { ... }
 - [ ] Create dependency resolution task (5min)
 - [ ] Update story scope if needed
 
+**Resolution Playbook References:**
+- Package Manager Issues: `.github/hooks/package-manager-errors.md`
+- ESLint/Quality Issues: `.github/hooks/eslint-errors.md`  
+- Performance Issues: `.github/hooks/performance-errors.md`
+- Emergency Procedures: `.github/hooks/emergency-overrides.md`
+
 ---
 **Time Box:** 2 minutes  
 **Agent Focus:** Dependency coordination only  
-**Output:** Clear execution order and data contracts
+**Output:** Clear execution order and data contracts, quality hooks compliant

@@ -3,6 +3,55 @@
 ## 🎯 Objective
 Clear, one-sentence description of what needs to be implemented.
 
+## 🚀 Development Environment Setup
+**Quality Gates Activation:**
+```bash
+# Enable Husky hooks for quality enforcement
+yarn install  # Installs dependencies including hook infrastructure
+yarn workspace backend install
+yarn workspace frontend install
+
+# Verify quality gates are active
+yarn lint:all    # Should run ESLint across all workspaces
+yarn test:all    # Should run tests (if configured)
+```
+
+**Hook Verification:**
+```bash
+# Test that quality gates are working
+echo "console.log('test')" > temp-test-file.js
+git add temp-test-file.js
+git commit -m "test quality gates" --dry-run
+# Should trigger linting and other quality checks
+rm temp-test-file.js
+```
+
+## 🛡️ Quality Gate Compliance
+**Pre-Implementation Validation:**
+- [ ] Quality hooks are active and functional
+- [ ] ESLint configuration is working (`yarn lint:all`)
+- [ ] Test infrastructure is operational (if applicable)
+- [ ] Workspace isolation is maintained (yarn workspaces)
+
+**Common Quality Violations & Quick Fixes:**
+```bash
+# ESLint violations - Auto-fix most issues:
+yarn workspace frontend eslint src/ --fix
+yarn workspace backend eslint src/ --fix
+
+# Package manager violations - Use yarn only:
+# ❌ Don't use: npm install
+# ✅ Use instead: yarn install
+# ❌ Don't use: npm install <package>
+# ✅ Use instead: yarn workspace backend add <package>
+```
+
+**Violation Resolution:**
+- Educational error messages will guide you to quick fixes
+- 90% of violations have copy-paste resolution commands
+- Escalate after 5 minutes if resolution unclear
+- Reference: `.github/hooks/README.md` for detailed guidance
+
 ## 📋 Scope & Requirements
 **User Story Link:** #123  
 **Specific Functionality:**
@@ -42,6 +91,13 @@ Errors: { 400: "Invalid handle", 409: "Game full" }
 - Include relevant function signatures
 
 ## ✅ Definition of Done
+**Quality Compliance (Required for all tasks):**
+- [ ] All commits pass quality gates (ESLint, tests, etc.)
+- [ ] No package manager violations (yarn-only enforcement)
+- [ ] Educational error messages reviewed if violations occurred
+- [ ] Quality hook performance remains under 30 seconds
+- [ ] No emergency overrides used (except documented emergencies)
+
 **Implementation (7-10min):**
 - [ ] Function/endpoint implemented as specified
 - [ ] Follows existing code patterns and conventions
@@ -68,6 +124,12 @@ Errors: { 400: "Invalid handle", 409: "Game full" }
 - [ ] Usage examples provided
 - [ ] Code comments for complex logic
 
+**Pre-Commit Verification:**
+- [ ] `git commit` completes without quality gate failures
+- [ ] Hook execution time is reasonable (<30 seconds)
+- [ ] All code follows project conventions automatically enforced
+- [ ] No `--no-verify` flags used (unless emergency documented)
+
 ## 🔗 Handoff Information
 **For Integration Agent:**
 - Exact API endpoints and contracts
@@ -79,10 +141,16 @@ Errors: { 400: "Invalid handle", 409: "Game full" }
 - Performance characteristics
 - Integration readiness
 
+**Resolution Playbook References:**
+- Package Manager Issues: `.github/hooks/package-manager-errors.md`
+- ESLint/Quality Issues: `.github/hooks/eslint-errors.md`  
+- Performance Issues: `.github/hooks/performance-errors.md`
+- Emergency Procedures: `.github/hooks/emergency-overrides.md`
+
 ---
 **Time Box:** 15-20 minutes total  
 **Breakdown:** 7-10min implementation + 5-7min test implementation + 5-8min test execution + 3-5min documentation  
 **Scope:** Single, focused functionality (one endpoint, one service method, one data operation)  
 **Iteration Limit:** 3 attempts maximum (escalate if scope too large)  
 **Context Requirement:** All necessary patterns, examples, and dependencies provided  
-**Quality Gates:** 90% function coverage, 80% decision coverage, all tests passing
+**Quality Gates:** 90% function coverage, 80% decision coverage, all tests passing, quality hooks compliant

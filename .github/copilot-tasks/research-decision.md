@@ -1,7 +1,29 @@
 # Research Decision Task Template
 
+## 🛡️ Quality Gate Compliance
+**Pre-Task Validation:**
+- [ ] Quality hooks are active and functional
+- [ ] Documentation tools are available
+
+**Resolution Playbook References:**
+- Package Manager Issues: `.github/hooks/package-manager-errors.md`
+- ESLint/Quality Issues: `.github/hooks/eslint-errors.md`
+- Performance Issues: `.github/hooks/performance-errors.md`
+- Emergency Procedures: `.github/hooks/emergency-overrides.md`
+
 ## 🎯 Decision Objective
 Make final technical decision based on research and validation, with clear implementation plan.
+
+## 🛡️ Quality Gate Compliance
+**Pre-Task Validation:**
+- [ ] Quality hooks are active and functional
+- [ ] Documentation tools are available
+
+**Resolution Playbook References:**
+- Package Manager Issues: `.github/hooks/package-manager-errors.md`
+- ESLint/Quality Issues: `.github/hooks/eslint-errors.md`
+- Performance Issues: `.github/hooks/performance-errors.md`
+- Emergency Procedures: `.github/hooks/emergency-overrides.md`
 
 ## 📋 Input Sources
 **Research Task:** #123 (15-20min research findings)  
