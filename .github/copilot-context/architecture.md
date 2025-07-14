@@ -34,3 +34,27 @@
 - Integration tests for WebSocket communication
 - E2E tests for complete player workflows
 - No database tests (in-memory only)
+
+## 🎮 Game Technical Specifications
+
+### Rendering Architecture
+- **Game Engine**: Native HTML5 Canvas API (no external game libraries)
+- **Viewport**: Fixed 1024×768 resolution
+- **Game Style**: 2D top-down pixel art shooter
+- **Map System**: Tilemap-based terrain with parallax background layers
+
+### Visual Layer Structure
+```
+6. UI Overlay (HUD, chat, scores)
+5. Game Objects (ships, projectiles, effects)  
+4. Terrain Layer (space obstacles, boundaries)
+3. Background Layer 3 (starmap - fastest parallax)
+2. Background Layer 2 (starmap - medium parallax)
+1. Background Layer 1 (starmap - slowest parallax)
+```
+
+### Art Direction
+- **Inspiration**: SubSpace/Continuum maps with modern pixel art
+- **Terrain Style**: Space junk, spaceport panels, pipes, geometric shapes
+- **Philosophy**: Clean, minimal features - simplified compared to SubSpace
+- **Collision**: Tile-based system for consistent physics

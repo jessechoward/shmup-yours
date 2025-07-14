@@ -120,6 +120,22 @@ Viewer Proxy ←→ Spectator Connections (WebSocket)
 - Strategic cover for retreats and cornering
 - No safe hiding spots - always potential combat
 
+### Technical Specifications
+**Game Type**: 2D sprite/pixel game
+**Rendering**: Native HTML5 Canvas API (no external game engines)
+**Viewport**: Fixed 1024×768 resolution
+**Map Structure**: 2D tilemap system
+
+**Visual Layers** (back to front):
+1. **Background Layer 1**: Sparse starmap (slowest scroll rate)
+2. **Background Layer 2**: Sparse starmap (medium scroll rate) 
+3. **Background Layer 3**: Sparse starmap (fastest scroll rate)
+4. **Terrain Layer**: Paintball field obstacles using space-themed tiles
+
+**Art Style**: Modern pixel art remake inspired by SubSpace maps
+**Terrain Assets**: Space junk, spaceport panels, pipes, geometric obstacles
+**Design Philosophy**: Clean, minimal features - less frills than SubSpace
+
 ### Map Progression
 **Current**: Single arena per server session
 **Future**: Map rotation between matches
@@ -186,7 +202,7 @@ Viewer Proxy ←→ Spectator Connections (WebSocket)
 
 ---
 
-## Technical Specifications (TBD)
+## Technical Specifications
 
 ### Server Requirements
 - **Node.js**: Single-threaded game server
@@ -199,6 +215,31 @@ Viewer Proxy ←→ Spectator Connections (WebSocket)
 - [ ] Maximum concurrent players
 - [ ] Network message frequency
 - [ ] Viewer proxy scaling limits
+
+---
+
+## Game Technical Specifications
+
+### Rendering & Display
+- **Engine**: Native HTML5 Canvas API (no external libraries)
+- **Viewport**: Fixed 1024×768 resolution
+- **Game Type**: 2D sprite/pixel top-down shooter
+- **Map System**: 2D tilemap with multiple scrolling background layers
+
+### Visual Architecture
+**Layer Stack** (back to front):
+1. **Background Layer 1**: Sparse starmap (slowest parallax scroll)
+2. **Background Layer 2**: Sparse starmap (medium parallax scroll) 
+3. **Background Layer 3**: Sparse starmap (fastest parallax scroll)
+4. **Terrain Layer**: Space-themed obstacles and boundaries
+5. **Game Objects**: Ships, projectiles, effects
+6. **UI Overlay**: HUD, chat, scores
+
+### Art Direction
+- **Style**: Modern pixel art inspired by SubSpace/Continuum
+- **Terrain**: Space junk, spaceport panels, pipes, geometric shapes
+- **Philosophy**: Clean and minimal - fewer features than original SubSpace
+- **Assets**: Tile-based terrain system for consistent collision detection
 
 ---
 
