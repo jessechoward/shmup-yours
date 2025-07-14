@@ -295,6 +295,82 @@ If Copilot encounters blockers:
 - Comment explaining the blocker
 - Reference blocking dependencies
 
+## Real-Time Agent Communication
+
+### **Communication Gap Challenge**
+GitHub Copilot agents may not monitor issue comments or label changes after starting work. We need explicit mechanisms for real-time communication.
+
+### **Emergency Stop Mechanism**
+To pause or stop an active agent:
+
+```markdown
+## 🛑 URGENT: Agent Please Stop
+@github-copilot please pause work on this issue immediately.
+
+**Reason:** [Priority change/blocking dependency/scope change/etc.]
+**Next Steps:** [What agent should do - await instructions/create WIP PR/etc.]
+**Estimated Impact:** [How this affects timeline]
+
+Please acknowledge this message before continuing.
+```
+
+### **Priority/Scope Change Communication**
+To communicate changes to active work:
+
+```markdown
+## 📢 UPDATED REQUIREMENTS
+@github-copilot please note the following changes:
+
+**Scope Change:** [What has changed in requirements]
+**Priority Update:** [New priority level or timeline]
+**Technical Change:** [New architectural decisions or constraints]
+
+**Action Required:**
+- [ ] Acknowledge receipt of changes
+- [ ] Assess impact on current work
+- [ ] Provide updated timeline estimate
+- [ ] Proceed with updated requirements
+```
+
+### **Status Check Request**
+To request immediate status from active agent:
+
+```markdown
+## 📊 STATUS CHECK REQUESTED
+@github-copilot please provide immediate status update:
+
+**Current Progress:** [What percentage complete?]
+**Current Focus:** [What are you working on right now?]
+**Blockers:** [Any issues encountered?]
+**ETA:** [When do you expect to complete?]
+
+Please respond within next comment cycle.
+```
+
+### **Dependency Resolution Notification**
+When blocking dependencies are resolved:
+
+```markdown
+## ✅ DEPENDENCY RESOLVED
+@github-copilot the following blocker has been resolved:
+
+**Previously Blocked On:** [Description of dependency]
+**Resolution:** [What was completed or changed]
+**Impact on Your Work:** [How this affects current implementation]
+
+**Action Required:**
+- [ ] Remove status/blocked label if applicable
+- [ ] Update implementation approach if needed
+- [ ] Provide revised timeline estimate
+```
+
+### **Communication Response Expectations**
+Agents should acknowledge communications within:
+- **Emergency Stop:** Immediate acknowledgment required
+- **Scope Changes:** Response within 1 comment cycle  
+- **Status Requests:** Response within 1 comment cycle
+- **Dependency Updates:** Acknowledgment and impact assessment
+
 ---
 **Workflow Owner:** Technical Product Manager  
 **Agent Coordination:** Automated via GitHub integration  
