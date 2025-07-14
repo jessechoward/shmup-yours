@@ -3,6 +3,20 @@
 
 We use a monorepo with Yarn workspaces. Each workspace (frontend, backend, test) has its own version and changelog, but releases are tagged at the repo level. Version bumps and changelogs are automated using Changesets and GitHub Actions.
 
+## GitHub Copilot Coding Agent Workflow
+
+**For AI Agent Implementation:**
+1. **Create Issue:** Use templates from `.github/ISSUE_TEMPLATE/`
+2. **Assign to Copilot:** Add `@github-copilot` mention or `#github-pull-request_copilot-coding-agent` hashtag
+3. **Agent Creates Branch:** Follows naming convention `feature/[issue-number]-[description]`
+4. **Implementation:** Agent implements, tests, and documents according to task template
+5. **Auto-PR Creation:** Agent opens PR using `.github/pull_request_template.md`
+6. **Review & Merge:** Human review and merge after quality gates pass
+
+**See `.github/COPILOT_WORKFLOW.md` for complete agent coordination details.**
+
+## Manual Development Workflow
+
 ## Issue & Branch Workflow
 
 ```mermaid
