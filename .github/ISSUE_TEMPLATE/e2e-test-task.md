@@ -1,6 +1,6 @@
 ---
 name: E2E Test Task
-about: Test complete user workflows (20-30min)
+about: Test complete user workflows (15-20min focused testing)
 title: '[E2E] Test [complete user workflow]'
 labels: testing, e2e, task
 assignees: ''
@@ -86,11 +86,13 @@ describe('Game Join Flow', () => {
 - [ ] Real-time updates work (WebSocket events)
 
 ## 🎯 Success Metrics
-- [ ] Time target: 20-30 minutes
+- [ ] Time target: 15-20 minutes (single user workflow)
 - [ ] Complete user workflows verified
 - [ ] All test scenarios pass consistently
 - [ ] Ready for deployment confidence
 
 ---
-**Estimated Time:** 20-30 minutes  
+**Estimated Time:** 15-20 minutes  
+**Scope:** Single complete user workflow with verification  
+**Iteration Limit:** 3 attempts maximum  
 **Success Criteria:** Full user workflow validation

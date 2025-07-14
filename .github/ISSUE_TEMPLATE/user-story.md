@@ -42,5 +42,7 @@ assignees: ''
 - #XXX (future story that depends on this)
 
 ---
-**Estimated Total Time:** 60-80 minutes (story breakdown + implementation)  
-**Target Completion:** [Date]
+**Estimated Total Time:** 15-20 minutes (story breakdown only)  
+**Scope:** Single user story broken into implementable tasks  
+**Iteration Limit:** 3 attempts maximum  
+**Output:** 3-8 focused implementation tasks, each 15-20 minutes

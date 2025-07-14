@@ -1,6 +1,6 @@
 ---
 name: Bug Fix Task
-about: Fix broken functionality (15-30min depending on complexity)
+about: Fix broken functionality (15-20min focused bug fix)
 title: '[Bug] Brief description of the issue'
 labels: bug, task
 assignees: ''
@@ -75,11 +75,13 @@ function fixedFunction() {
 - [ ] Any configuration changes noted
 
 ## 🎯 Success Metrics
-- [ ] Time target: 15-30 minutes (depending on complexity)
+- [ ] Time target: 15-20 minutes (single focused bug fix)
 - [ ] Bug completely resolved
 - [ ] No regression in existing functionality
 - [ ] Prevention measures in place
 
 ---
-**Estimated Time:** 15-30 minutes  
+**Estimated Time:** 15-20 minutes  
+**Scope:** Single focused bug fix with verification  
+**Iteration Limit:** 3 attempts maximum  
 **Priority:** [High/Medium/Low based on impact]

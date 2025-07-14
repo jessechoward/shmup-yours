@@ -1,6 +1,6 @@
 ---
 name: Research Task
-about: Investigate technical approaches (30min research + 20min challenge + 10min decision)
+about: Investigate technical approaches (10min research + 5min validation + 5min decision)
 title: '[Research] [Question to investigate]'
 labels: research, planning
 assignees: ''
@@ -24,9 +24,9 @@ Clear question or problem to investigate.
 
 ## 🔧 Research Workflow
 **This research will create:**
-- [ ] Research Task #XXX (30min) - Initial investigation
-- [ ] Challenge Task #XXX (20min) - Validate findings and challenge assumptions  
-- [ ] Decision Task #XXX (10min) - Final recommendation with implementation plan
+- [ ] Research Investigation (10min) - Initial investigation and comparison
+- [ ] Validation Check (5min) - Challenge assumptions and verify findings  
+- [ ] Decision Summary (5min) - Final recommendation with implementation plan
 
 ## 📊 Evaluation Criteria
 **Priority Rankings:**
@@ -53,5 +53,6 @@ Clear question or problem to investigate.
 - #XXX (related decisions)
 
 ---
-**Estimated Total Time:** 60 minutes (30+20+10 research workflow)  
-**Target Completion:** [Date]
+**Estimated Total Time:** 15-20 minutes (10min research + 5min validation + 5min decision)  
+**Scope:** Single focused technical question with clear recommendation
+**Iteration Limit:** 3 attempts maximum (escalate if research scope too broad)
