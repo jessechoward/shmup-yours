@@ -224,6 +224,77 @@ jobs:
 2. **Assign Agent:** Add Copilot mention in comments
 3. **Track Progress:** Monitor branch creation and PR status
 
+## Agent Communication Guidelines
+
+### **Required Issue Updates**
+When Copilot starts work on an issue:
+```markdown
+## 🚀 Implementation Started
+**Branch Created:** `feature/[issue-number]-[description]`
+**Approach:** [Brief description of implementation strategy]
+**Estimated Completion:** [Time estimate]
+```
+
+### **Progress Updates (Optional but Encouraged)**
+If implementation is complex or taking longer than expected:
+```markdown
+## 📊 Progress Update
+**Completed:** [What's been implemented so far]
+**Current Focus:** [What's being worked on now]
+**Decisions Made:** [Any technical decisions or tradeoffs]
+**Questions/Blockers:** [Any issues needing clarification]
+**Time Used:** [X] of [Y] minutes estimated
+```
+
+### **Completion Summary (Required)**
+When creating PR and closing issue:
+```markdown
+## ✅ Implementation Complete
+**PR Created:** #[pr-number]
+**Key Decisions:** [Important choices made during implementation]
+**Testing:** [Tests written and results]
+**Follow-up Issues:** [Any additional work identified]
+**Time Used:** [Actual vs estimated time]
+```
+
+## Issue Status Management
+
+### **Status Labels (Automated)**
+GitHub issues track status through labels:
+
+```yaml
+Status Progression:
+status/backlog → status/in-progress → status/code-complete → status/testing → CLOSED
+                      ↓
+                 status/blocked (if issues arise)
+```
+
+### **Status Transitions**
+**When Copilot starts work:**
+- Remove `status/backlog` 
+- Add `status/in-progress`
+- Comment with implementation start notice
+
+**When PR is created:**
+- Remove `status/in-progress`
+- Add `status/code-complete` 
+- Link PR to issue with "Closes #X"
+
+**When testing begins:**
+- Remove `status/code-complete`
+- Add `status/testing`
+- Validate acceptance criteria
+
+**When issue is complete:**
+- Remove all status labels
+- Close issue (automatic when PR merges)
+
+### **Blocked Issues**
+If Copilot encounters blockers:
+- Add `status/blocked` label
+- Comment explaining the blocker
+- Reference blocking dependencies
+
 ---
 **Workflow Owner:** Technical Product Manager  
 **Agent Coordination:** Automated via GitHub integration  
