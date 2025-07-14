@@ -1,0 +1,79 @@
+name: SLI/SLO Performance Tracking
+
+on:
+  pull_request:
+    types: [opened, closed, ready_for_review]
+  issues:
+    types: [assigned, closed]
+  schedule:
+    - cron: '0 */6 * * *'  # Every 6 hours
+  workflow_dispatch:
+
+jobs:
+  track-performance:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request' || github.event_name == 'issues'
+    
+    steps:
+    - name: Track SLI Metrics
+      uses: actions/github-script@v7
+      with:
+        script: |
+          console.log('SLI/SLO tracking triggered');
+          console.log('Event:', context.eventName);
+          console.log('Action:', context.payload.action);
+          
+          // Log timing data for manual collection
+          if (context.payload.pull_request) {
+            const pr = context.payload.pull_request;
+            console.log(`PR #${pr.number} timing:`, {
+              created: pr.created_at,
+              merged: pr.merged_at,
+              closed: pr.closed_at
+            });
+          }
+          
+          if (context.payload.issue) {
+            const issue = context.payload.issue;
+            console.log(`Issue #${issue.number} timing:`, {
+              created: issue.created_at,
+              assigned: issue.assignees.length > 0 ? 'assigned' : 'unassigned'
+            });
+          }
+
+  generate-dashboard:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    
+    steps:
+    - name: Generate SLI/SLO Report
+      uses: actions/github-script@v7
+      with:
+        script: |
+          console.log('Generating SLI/SLO dashboard...');
+          
+          // Query for labeled issues
+          const { data: issues } = await github.rest.issues.listForRepo({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            labels: 'slo-success,slo-violation',
+            state: 'all',
+            per_page: 100
+          });
+          
+          const successes = issues.filter(i => 
+            i.labels.some(l => l.name === 'slo-success')
+          ).length;
+          
+          const violations = issues.filter(i => 
+            i.labels.some(l => l.name === 'slo-violation')
+          ).length;
+          
+          console.log(`SLO Performance: ${successes} successes, ${violations} violations`);
+          
+          return {
+            successes,
+            violations,
+            total: successes + violations,
+            successRate: successes / (successes + violations) * 100
+          };
