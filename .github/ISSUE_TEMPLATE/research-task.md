@@ -37,11 +37,23 @@ Clear question or problem to investigate.
 - Learning curve: [High/Medium/Low]
 
 ## ✅ Success Criteria
+**Setup & Quality Gates (1-2min):**
+- [ ] `yarn install` completed to enable Husky hooks
+- [ ] All pre-commit hooks working correctly
+- [ ] Development environment ready
+
+**Research & Analysis (10-12min):**
 - [ ] Clear recommendation with rationale
 - [ ] Implementation plan with next steps
 - [ ] Risk assessment and mitigation strategies
 - [ ] Cost/benefit analysis completed
 - [ ] Decision ready for implementation
+
+**Quality Validation (1-2min):**
+- [ ] All Husky pre-commit hooks pass successfully
+- [ ] Linting passes without errors (if code examples included)
+- [ ] No hook bypasses used (unless emergency documented)
+- [ ] Commit message follows conventional format
 
 ## 🔗 Dependencies
 **Depends on:** (Information needed before research)
@@ -56,3 +68,9 @@ Clear question or problem to investigate.
 **Estimated Total Time:** 15-20 minutes (10min research + 5min validation + 5min decision)  
 **Scope:** Single focused technical question with clear recommendation
 **Iteration Limit:** 3 attempts maximum (escalate if research scope too broad)
+
+**🔧 Husky Hook Troubleshooting**:
+- **Hook timeout**: Hooks should complete within 30 seconds
+- **Linting failures**: Run `yarn lint:all --fix` to auto-resolve
+- **Test failures**: Fix tests before committing (no bypasses)
+- **Emergency overrides**: Use `git commit --no-verify` only for critical fixes

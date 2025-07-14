@@ -79,5 +79,8 @@ Enter your handle and dive straight into the action, or sit back and spectate on
 ## Developer Resources
 - [CONTRIBUTING.md](CONTRIBUTING.md)
 - [DESIGN.md](DESIGN.md)
+- [WebSocket Protocol Specification](WEBSOCKET_PROTOCOL.md)
+- [WebSocket Implementation Guide](WEBSOCKET_IMPLEMENTATION.md)
+- [Protocol Quick Reference](WEBSOCKET_SUMMARY.md)
 
 ## Credits
