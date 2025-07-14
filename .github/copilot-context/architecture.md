@@ -28,6 +28,7 @@
 - WebSocket server must be set up before real-time features
 - Handle reservation must work before player management
 - Basic game loop before advanced features
+- **WebSocket Protocol**: See `WEBSOCKET_PROTOCOL.md` for complete specification
 
 ## Testing Strategy
 - Unit tests for game logic (isolated)
