@@ -2,9 +2,24 @@
   "name": "@shmup-yours/backend",
   "version": "0.1.0",
   "private": true,
-  "main": "src/index.js",
-  "description": "Backend game server for shmup-yours",
-  "keywords": ["shmup-yours", "backend", "nodejs", "server"],
+  "main": "src/server.js",
+  "description": "Backend WebSocket server for multiplayer retro shooter",
+  "keywords": ["shmup-yours", "backend", "nodejs", "websocket", "multiplayer"],
   "author": "jessechoward",
-  "license": "MIT"
+  "license": "MIT",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js",
+    "test": "node --test test/**/*.test.js"
+  },
+  "dependencies": {
+    "ws": "^8.17.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  },
+  "type": "module",
+  "engines": {
+    "node": ">=18.0.0"
+  }
 }
