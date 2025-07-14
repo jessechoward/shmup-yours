@@ -77,23 +77,31 @@ fetch('/api/game/join', {
 - [ ] Follows existing code patterns and conventions
 - [ ] Code passes linting (ESLint)
 
-**Testing Complete (3-5min):**
-- [ ] Test code written for all functionality
-- [ ] Tests actually run and pass
-- [ ] Edge cases and error states covered
-- [ ] No test flakiness or timing issues
+**Implementation (7-10min):**
+- [ ] Component/feature implemented as specified
+- [ ] Follows existing UI patterns and conventions
+- [ ] State management properly implemented
+- [ ] Error handling and loading states included
+- [ ] Accessibility basics included (ARIA labels, keyboard nav)
+- [ ] Code passes linting (ESLint)
 
-**Verification Complete (2-3min):**
+**Test Implementation (5-7min):**
+- [ ] Test code written for all functionality
+- [ ] User interaction tests included
+- [ ] Edge cases and error states covered
+- [ ] Mock data/API responses configured
+
+**Test Execution (5-8min):**
+- [ ] All tests run and pass consistently
 - [ ] Manual verification of user experience
 - [ ] Responsive design tested (mobile/desktop)
-- [ ] Integration with existing components verified
 - [ ] No console errors or warnings
 
-**Documentation Complete (3-5min):**
+**Documentation (3-5min):**
 - [ ] Code comments added for complex logic
 - [ ] Component usage documented (if reusable)
-- [ ] README or docs updated if needed
-- [ ] Accessibility considerations documented
+- [ ] Props/API interface documented
+- [ ] Accessibility considerations noted
 
 ## 🔗 Handoff Information
 **For Testing Agent:**
@@ -111,9 +119,9 @@ fetch('/api/game/join', {
 - Data structures expected
 
 ---
-**Time Box:** 15-20 minutes  
-**Target:** 15 minutes (escalate if consistently hitting 20+)  
-**Agent Focus:** Complete feature implementation with testing  
-**Scope:** Single UI element with full verification  
-**Dependencies:** Link to prerequisite GitHub issues  
-**Next Tasks:** Integration verification, PM review
+**Time Box:** 15-20 minutes total  
+**Breakdown:** 7-10min implementation + 5-7min test implementation + 5-8min test execution + 3-5min documentation  
+**Scope:** Single UI component or feature (one form, one display component, one interaction)  
+**Iteration Limit:** 3 attempts maximum (escalate if scope too large)  
+**Context Requirement:** Design specs, UI patterns, API contracts, and existing component examples provided  
+**Quality Gates:** All tests passing, responsive design verified, no console errors

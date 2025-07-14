@@ -42,31 +42,31 @@ Errors: { 400: "Invalid handle", 409: "Game full" }
 - Include relevant function signatures
 
 ## ✅ Definition of Done
-**Implementation Complete (5-7min):**
+**Implementation (7-10min):**
 - [ ] Function/endpoint implemented as specified
 - [ ] Follows existing code patterns and conventions
 - [ ] Error handling included
-- [ ] Logging added (using Winston)
+- [ ] Logging added (using Winston structured format)
 - [ ] Input validation implemented
 - [ ] Code passes linting (ESLint)
 
-**Testing Complete (3-5min):**
+**Test Implementation (5-7min):**
 - [ ] Unit tests written and passing
 - [ ] Error case tests included
-- [ ] Integration tests if needed
-- [ ] Tests run without flakiness
+- [ ] Edge case coverage
+- [ ] Mocks/stubs properly configured
 
-**Verification Complete (2-3min):**
-- [ ] Manual API testing (Postman/curl)
-- [ ] Performance acceptable
-- [ ] No breaking changes to existing APIs
-- [ ] Memory/resource usage reasonable
+**Test Execution (5-8min):**
+- [ ] All tests pass consistently
+- [ ] Code coverage meets requirements (90% function, 80% decision)
+- [ ] Performance testing if applicable
+- [ ] No test flakiness
 
-**Documentation Complete (3-5min):**
-- [ ] Function documentation added
-- [ ] API documentation updated
-- [ ] Error codes documented
+**Documentation (3-5min):**
+- [ ] Function/API documentation added
+- [ ] Error codes and responses documented
 - [ ] Usage examples provided
+- [ ] Code comments for complex logic
 
 ## 🔗 Handoff Information
 **For Integration Agent:**
@@ -80,9 +80,9 @@ Errors: { 400: "Invalid handle", 409: "Game full" }
 - Integration readiness
 
 ---
-**Time Box:** 15-20 minutes  
-**Target:** 15 minutes (escalate if consistently hitting 20+)  
-**Agent Focus:** Complete backend implementation with testing  
-**Scope:** Single endpoint, function, or service method with full verification  
-**Dependencies:** Link to prerequisite GitHub issues  
-**Next Tasks:** Frontend integration, PM review
+**Time Box:** 15-20 minutes total  
+**Breakdown:** 7-10min implementation + 5-7min test implementation + 5-8min test execution + 3-5min documentation  
+**Scope:** Single, focused functionality (one endpoint, one service method, one data operation)  
+**Iteration Limit:** 3 attempts maximum (escalate if scope too large)  
+**Context Requirement:** All necessary patterns, examples, and dependencies provided  
+**Quality Gates:** 90% function coverage, 80% decision coverage, all tests passing

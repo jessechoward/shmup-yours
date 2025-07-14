@@ -1,7 +1,7 @@
 # Story Analysis Task Template
 
 ## 📖 Analysis Objective
-Break down user story into 5-minute implementation tasks with clear scope boundaries.
+Break down user story into 15-20 minute implementation tasks with clear scope boundaries.
 
 ## 📋 Source Story
 **User Story:** #123  
@@ -32,7 +32,7 @@ So that [benefit]
 - [ ] Unclear or ambiguous requirements
 
 ## ⚡ Task Identification
-**Implementation Tasks (5min each):**
+**Implementation Tasks (15-20min each):**
 1. **Backend Task:** [Specific function/endpoint to implement]
 2. **Frontend Task:** [Specific component/interaction to build]
 3. **Integration Task:** [Specific connection to establish]
@@ -51,12 +51,14 @@ So that [benefit]
 - [ ] All acceptance criteria covered by tasks
 
 **Story Needs Breakdown if:**
-- [ ] Any task feels >5 minutes
+- [ ] Any task feels >15-20 minutes
 - [ ] Tasks have unclear boundaries
 - [ ] Success criteria are ambiguous
 - [ ] Multiple user types or workflows involved
 
 ---
-**Time Box:** 5 minutes  
-**Agent Focus:** Analysis and task identification only  
-**Output:** List of ready-to-execute 5-minute tasks
+**Time Box:** 15-20 minutes total  
+**Agent Focus:** Analysis and task breakdown only  
+**Output:** List of ready-to-execute 15-20 minute implementation tasks  
+**Scope:** Single user story broken into 3-8 focused tasks  
+**Quality Gate:** Each task must be implementable within time-box limits
