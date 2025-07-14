@@ -37,6 +37,11 @@ Clear description of what documentation needs to be created or updated.
 ```
 
 ## ✅ Definition of Done
+**Setup & Quality Gates (1-2min):**
+- [ ] `yarn install` completed to enable Husky hooks
+- [ ] All pre-commit hooks working correctly
+- [ ] Development environment ready
+
 **Content Creation (8-12min):**
 - [ ] Clear and concise explanations written
 - [ ] Code examples work correctly
@@ -56,6 +61,12 @@ Clear description of what documentation needs to be created or updated.
 - [ ] Consistent tone and structure maintained
 - [ ] Ready for review
 
+**Quality Validation (1-2min):**
+- [ ] All Husky pre-commit hooks pass successfully
+- [ ] Linting passes without errors (if documentation includes code)
+- [ ] No hook bypasses used (unless emergency documented)
+- [ ] Commit message follows conventional format
+
 **Quality Check (2-3min):**
 - [ ] "What" is explained clearly
 - [ ] "Why" provides context and rationale
@@ -67,6 +78,13 @@ Clear description of what documentation needs to be created or updated.
 - [ ] Documentation is clear and helpful
 - [ ] Reduces future questions/confusion
 - [ ] Maintains consistency with existing docs
+- [ ] All Husky hooks pass successfully
+
+**🔧 Husky Hook Troubleshooting**:
+- **Hook timeout**: Hooks should complete within 30 seconds
+- **Linting failures**: Run `yarn lint:all --fix` to auto-resolve
+- **Test failures**: Fix tests before committing (no bypasses)
+- **Emergency overrides**: Use `git commit --no-verify` only for critical fixes
 
 ---
 **Estimated Time:** 15-20 minutes  
