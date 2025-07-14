@@ -72,7 +72,7 @@ size/small:
 
 size/medium:
   color: "fbca04"
-  description: "30-45 minute task, may need breakdown"
+  description: "20+ minute task, requires breakdown"
 
 size/large:
   color: "d93f0b"

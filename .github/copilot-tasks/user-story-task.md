@@ -33,4 +33,4 @@
 ---
 **Estimated Effort:** [Small/Medium/Large]  
 **Priority:** [High/Medium/Low]  
-**Time Box:** 30-60 minutes for story definition
+**Time Box:** 15-20 minutes for story definition

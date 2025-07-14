@@ -67,7 +67,7 @@ Clear question or problem to investigate.
 ```
 
 ---
-**Time Box:** 30 minutes  
+**Time Box:** 15-20 minutes  
 **Agent Focus:** Research and analysis only  
 **Scope:** Single technical question or comparison  
 **Next Steps:** Research challenge/validation (20min) → Decision (10min)

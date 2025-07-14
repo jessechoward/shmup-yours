@@ -98,7 +98,7 @@ const TEST_CONFIG = {
 - Test environment configured
 
 ---
-**Time Box:** 20-30 minutes  
-**Target:** 25 minutes (escalate if consistently hitting 30+)  
+**Time Box:** 15-20 minutes  
+**Target:** 20 minutes (escalate if consistently hitting 20+)  
 **Agent Focus:** Complete end-to-end testing with verification  
 **Success Metric:** Complete user workflows verified

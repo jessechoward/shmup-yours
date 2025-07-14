@@ -40,7 +40,7 @@ Hybrid approach combining code-based documentation with GitHub's native project 
 
 ### Task Labeling System
 - **Priority:** `p0-critical`, `p1-high`, `p2-medium`, `p3-low`
-- **Size:** `size-s`, `size-m`, `size-l` (15min, 30min, 60min+)
+- **Size:** `size-s`, `size-m`, `size-l` (15-20min, requires breakdown, escalation)
 - **Type:** `backend`, `frontend`, `testing`, `docs`, `research`
 - **Status:** `blocked`, `waiting-review`, `needs-context`
 

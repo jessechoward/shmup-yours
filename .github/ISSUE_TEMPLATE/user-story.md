@@ -1,6 +1,6 @@
 ---
 name: User Story
-about: Define user behavior and outcomes (30-60min analysis)
+about: Define user behavior and outcomes (15-20min analysis)
 title: '[Story] As a [user] I want [goal] so that [benefit]'
 labels: story, planning
 assignees: ''
