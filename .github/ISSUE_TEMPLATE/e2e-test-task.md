@@ -51,6 +51,11 @@ describe('Game Join Flow', () => {
 ```
 
 ## ✅ Definition of Done
+**Setup & Quality Gates (1-2min):**
+- [ ] `yarn install` completed to enable Husky hooks
+- [ ] All pre-commit hooks working correctly
+- [ ] Development environment ready
+
 **Test Implementation (10-15min):**
 - [ ] E2E test file created
 - [ ] All user scenarios covered
@@ -68,6 +73,12 @@ describe('Game Join Flow', () => {
 - [ ] Edge cases properly tested
 - [ ] Test output provides clear feedback
 - [ ] Tests can run in CI environment
+
+**Quality Validation (1-2min):**
+- [ ] All Husky pre-commit hooks pass successfully
+- [ ] Linting passes without errors
+- [ ] No hook bypasses used (unless emergency documented)
+- [ ] Commit message follows conventional format
 
 **Documentation Complete (2-3min):**
 - [ ] Test purpose and scope documented
@@ -90,6 +101,13 @@ describe('Game Join Flow', () => {
 - [ ] Complete user workflows verified
 - [ ] All test scenarios pass consistently
 - [ ] Ready for deployment confidence
+- [ ] All Husky hooks pass successfully
+
+**🔧 Husky Hook Troubleshooting**:
+- **Hook timeout**: Hooks should complete within 30 seconds
+- **Linting failures**: Run `yarn lint:all --fix` to auto-resolve
+- **Test failures**: Fix tests before committing (no bypasses)
+- **Emergency overrides**: Use `git commit --no-verify` only for critical fixes
 
 ---
 **Estimated Time:** 15-20 minutes  

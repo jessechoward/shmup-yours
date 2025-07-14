@@ -52,6 +52,11 @@ Errors: { 400: "Bad request", 409: "Conflict" }
 - Configuration requirements
 
 ## ✅ Definition of Done
+**Setup & Quality Gates (1-2min):**
+- [ ] `yarn install` completed to enable Husky hooks
+- [ ] All pre-commit hooks working correctly
+- [ ] Development environment ready
+
 **Implementation (5-7min):**
 - [ ] Function/endpoint implemented
 - [ ] Input validation included
@@ -70,6 +75,12 @@ Errors: { 400: "Bad request", 409: "Conflict" }
 - [ ] No breaking changes to existing APIs
 - [ ] Memory/resource usage reasonable
 
+**Quality Validation (1-2min):**
+- [ ] All Husky pre-commit hooks pass successfully
+- [ ] Linting passes without errors
+- [ ] No hook bypasses used (unless emergency documented)
+- [ ] Commit message follows conventional format
+
 **Documentation (3-5min):**
 - [ ] Function documentation added
 - [ ] API documentation updated
@@ -79,7 +90,14 @@ Errors: { 400: "Bad request", 409: "Conflict" }
 ## 🎯 Success Metrics
 - [ ] Time target: 15-20 minutes
 - [ ] All Definition of Done items checked
+- [ ] All Husky hooks pass successfully
 - [ ] Ready for frontend integration
+
+**🔧 Husky Hook Troubleshooting**:
+- **Hook timeout**: Hooks should complete within 30 seconds
+- **Linting failures**: Run `yarn lint:all --fix` to auto-resolve
+- **Test failures**: Fix tests before committing (no bypasses)
+- **Emergency overrides**: Use `git commit --no-verify` only for critical fixes
 
 ---
 **Estimated Time:** 15-20 minutes  

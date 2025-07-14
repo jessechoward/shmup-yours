@@ -66,11 +66,28 @@ Clear, one-sentence description of the architectural decision or research needed
 
 ## ✅ Definition of Done
 
+**Setup & Quality Gates (1-2min):**
+- [ ] `yarn install` completed to enable Husky hooks
+- [ ] All pre-commit hooks working correctly
+- [ ] Development environment ready
+
+**Research & Decision (10-12min):**
 - [ ] Research completed and documented
 - [ ] Decision made with clear rationale
 - [ ] Implementation guidelines defined
 - [ ] Dependencies and next steps identified
+
+**Documentation (3-5min):**
 - [ ] ADR created in `/docs/architecture/`
+- [ ] Decision properly documented
+- [ ] Implementation guidelines clear
+- [ ] Next steps identified
+
+**Quality Validation (1-2min):**
+- [ ] All Husky pre-commit hooks pass successfully
+- [ ] Linting passes without errors (if code examples included)
+- [ ] No hook bypasses used (unless emergency documented)
+- [ ] Commit message follows conventional format
 
 ---
 
@@ -82,5 +99,11 @@ Clear, one-sentence description of the architectural decision or research needed
 - Multiple viable options need deeper analysis
 - External dependencies block decision
 - Integration complexity exceeds scope
+
+**🔧 Husky Hook Troubleshooting**:
+- **Hook timeout**: Hooks should complete within 30 seconds
+- **Linting failures**: Run `yarn lint:all --fix` to auto-resolve
+- **Test failures**: Fix tests before committing (no bypasses)
+- **Emergency overrides**: Use `git commit --no-verify` only for critical fixes
 
 **If consistently >20min:** Break into research + decision tasks

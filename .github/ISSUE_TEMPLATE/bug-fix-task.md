@@ -54,6 +54,11 @@ function fixedFunction() {
 ```
 
 ## ✅ Definition of Done
+**Setup & Quality Gates (1-2min):**
+- [ ] `yarn install` completed to enable Husky hooks
+- [ ] All pre-commit hooks working correctly
+- [ ] Development environment ready
+
 **Fix Implementation (8-12min):**
 - [ ] Bug no longer occurs with original reproduction steps
 - [ ] Fix doesn't break existing functionality
@@ -72,6 +77,12 @@ function fixedFunction() {
 - [ ] Performance not negatively affected
 - [ ] User experience improved
 
+**Quality Validation (1-2min):**
+- [ ] All Husky pre-commit hooks pass successfully
+- [ ] Linting passes without errors
+- [ ] No hook bypasses used (unless emergency documented)
+- [ ] Commit message follows conventional format
+
 **Documentation Complete (2-5min):**
 - [ ] Code comments updated if needed
 - [ ] Bug fix approach documented
@@ -82,6 +93,13 @@ function fixedFunction() {
 - [ ] Bug completely resolved
 - [ ] No regression in existing functionality
 - [ ] Prevention measures in place
+- [ ] All Husky hooks pass successfully
+
+**🔧 Husky Hook Troubleshooting**:
+- **Hook timeout**: Hooks should complete within 30 seconds
+- **Linting failures**: Run `yarn lint:all --fix` to auto-resolve
+- **Test failures**: Fix tests before committing (no bypasses)
+- **Emergency overrides**: Use `git commit --no-verify` only for critical fixes
 
 ---
 **Estimated Time:** 15-20 minutes  
