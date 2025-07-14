@@ -7,6 +7,9 @@ assignees: ''
 
 ---
 
+<!-- CONTEXT: Read .copilot-instructions.md and GAME_DESIGN.md before starting -->
+<!-- ARCHITECTURE: Single-server design - see .github/copilot-context/architecture.md -->
+
 ## 🐛 Bug Description
 **Issue:** #XXX (link to bug report if separate)  
 **Summary:** One-sentence description of the problem
