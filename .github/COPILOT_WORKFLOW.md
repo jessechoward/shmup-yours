@@ -372,7 +372,52 @@ Agents should acknowledge communications within:
 - **Dependency Updates:** Acknowledgment and impact assessment
 
 ---
+
 **Workflow Owner:** Technical Product Manager  
 **Agent Coordination:** Automated via GitHub integration  
 **Quality Assurance:** Automated testing + human review  
 **Continuous Improvement:** Weekly workflow retrospectives
+
+## Monorepo Context & Commands
+
+### **Project Structure**
+This is a Yarn Workspaces monorepo with the following structure:
+```
+shmup-yours/
+├── package.json              # Root workspace configuration
+├── backend/                   # Backend workspace
+│   ├── package.json
+│   └── src/
+├── frontend/                  # Frontend workspace  
+│   ├── package.json
+│   └── src/
+└── test/                      # Testing workspace
+    ├── package.json
+    └── e2e/
+```
+
+### **Yarn Commands Reference**
+**Always use `yarn` (never `npm`) for consistency**
+
+```bash
+# Root level commands:
+yarn install                   # Install all workspace dependencies
+yarn dev                      # Start all workspaces in development
+yarn build                    # Build all workspaces
+yarn test                     # Run all tests
+
+# Workspace-specific commands:
+yarn workspace backend dev    # Backend development server
+yarn workspace frontend dev   # Frontend development server
+yarn workspace test run       # E2E test execution
+
+# Add dependencies to specific workspace:
+cd backend && yarn add ws      # Add WebSocket library to backend
+cd frontend && yarn add axios  # Add HTTP client to frontend
+```
+
+### **Common Mistakes to Avoid**
+- ❌ Don't use `npm install` - use `yarn install`
+- ❌ Don't install packages at root level unless needed by all workspaces
+- ❌ Don't run scripts from wrong directory - use `yarn workspace [name] [script]`
+- ❌ Don't mix package managers - yarn only for consistency

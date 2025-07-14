@@ -20,6 +20,14 @@ Clear, one-sentence description of what backend functionality needs to be implem
 - #XXX (API testing)
 
 ## ⚙️ Implementation Requirements
+**Monorepo Context:** Use Yarn Workspaces commands consistently
+```bash
+# Work in backend workspace:
+cd backend && yarn install        # Install dependencies
+yarn workspace backend dev       # Run development server
+yarn workspace backend test      # Run tests
+```
+
 **Code to Create:**
 - `backend/src/routes/[endpoint].js`
 - `backend/src/services/[service].js`

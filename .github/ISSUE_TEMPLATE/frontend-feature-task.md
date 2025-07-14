@@ -20,6 +20,15 @@ Clear, one-sentence description of what UI/UX needs to be implemented.
 - #XXX (e2e testing)
 
 ## 🎨 Implementation Requirements
+**Monorepo Context:** Use Yarn Workspaces commands consistently
+```bash
+# Work in frontend workspace:
+cd frontend && yarn install      # Install dependencies
+yarn workspace frontend dev     # Run development server
+yarn workspace frontend build   # Build for production  
+yarn workspace frontend test    # Run tests
+```
+
 **Component to Create:**
 - `frontend/src/components/[ComponentName].js`
 

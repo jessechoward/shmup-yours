@@ -37,6 +37,40 @@ Detailed description of the interface:
 - Animation/transition requirements
 
 ## 🔧 Technical Specifications
+**Monorepo Context:** This is a Yarn Workspaces monorepo  
+**Frontend Workspace:** `/frontend/` directory
+
+**Package Management:** Use `yarn` commands consistently
+```bash
+# Install dependencies in frontend workspace:
+cd frontend && yarn add [package-name]
+
+# Run frontend scripts:
+yarn workspace frontend dev         # Development server  
+yarn workspace frontend build      # Build for production
+yarn workspace frontend test       # Run tests
+yarn workspace frontend lint       # Code quality checks
+```
+
+**Components to Implement:**
+- `frontend/src/components/[ComponentName].js`
+- `frontend/src/styles/[component-name].css`
+
+**UI Mockup/Description:**
+```
+Detailed description of the interface:
+- Layout and positioning
+- Interactive elements (buttons, inputs, etc.)
+- Visual feedback and states
+- Responsive behavior
+```
+
+**User Interactions:**
+- Click handlers and event listeners
+- Form submissions and validation
+- Keyboard shortcuts
+- Animation/transition requirements
+
 **Canvas Integration:** (if applicable)
 - Rendering requirements
 - Game loop integration

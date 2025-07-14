@@ -4,7 +4,13 @@
   "private": true,
   "main": "src/server.js",
   "description": "Backend WebSocket server for multiplayer retro shooter",
-  "keywords": ["shmup-yours", "backend", "nodejs", "websocket", "multiplayer"],
+  "keywords": [
+    "shmup-yours",
+    "backend",
+    "nodejs",
+    "websocket",
+    "multiplayer"
+  ],
   "author": "jessechoward",
   "license": "MIT",
   "scripts": {

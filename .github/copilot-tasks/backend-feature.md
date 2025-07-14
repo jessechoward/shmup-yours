@@ -11,10 +11,24 @@ Clear, one-sentence description of what needs to be implemented.
 - Data structures and schemas
 
 ## 🔧 Technical Specifications
+**Monorepo Context:** This is a Yarn Workspaces monorepo  
+**Backend Workspace:** `/backend/` directory  
+
 **Files to Create/Modify:**
 - `backend/src/routes/[specific-file].js`
 - `backend/src/services/[specific-file].js`
 - `backend/src/models/[specific-file].js`
+
+**Package Management:** Use `yarn` commands consistently
+```bash
+# Install dependencies in backend workspace:
+cd backend && yarn add [package-name]
+
+# Run backend scripts:
+yarn workspace backend dev          # Development server
+yarn workspace backend test        # Run tests
+yarn workspace backend build       # Build for production
+```
 
 **API Contract:**
 ```javascript
@@ -26,7 +40,7 @@ Errors: { 400: "Invalid handle", 409: "Game full" }
 ```
 
 **Dependencies:**
-- External libraries needed
+- External libraries needed (install with `yarn add` in backend workspace)
 - Internal modules to import
 - Database schemas (if applicable)
 
