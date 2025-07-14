@@ -150,8 +150,10 @@ class MapGenerator {
         const obstacleTypes = ['panels', 'pipes', 'debris', 'hulls'];
         let tilesPlaced = 0;
         
-        // Create strategic clusters throughout the map
-        const numClusters = Math.floor(Math.sqrt(targetTiles));
+        // Calculate appropriate number of clusters
+        // Aim for clusters of 4-8 tiles each, so divide target by average cluster size
+        const avgClusterSize = 6;
+        const numClusters = Math.ceil(targetTiles / avgClusterSize);
         
         for (let i = 0; i < numClusters && tilesPlaced < targetTiles; i++) {
             const cluster = {
@@ -163,9 +165,13 @@ class MapGenerator {
             
             // Generate cluster shape (L-shaped, linear, or compact)
             const clusterShape = ['l_shape', 'linear', 'compact'][Math.floor(Math.random() * 3)];
-            const clusterSize = Math.min(8, Math.floor((targetTiles - tilesPlaced) / (numClusters - i)));
             
-            cluster.tiles = this.generateClusterTiles(cluster.centerX, cluster.centerY, clusterShape, clusterSize, mapSize);
+            // Calculate remaining tiles needed
+            const remainingTiles = targetTiles - tilesPlaced;
+            const remainingClusters = numClusters - i;
+            const targetClusterSize = Math.min(8, Math.max(2, Math.floor(remainingTiles / remainingClusters)));
+            
+            cluster.tiles = this.generateClusterTiles(cluster.centerX, cluster.centerY, clusterShape, targetClusterSize, mapSize);
             tilesPlaced += cluster.tiles.length;
             
             clusters.push(cluster);

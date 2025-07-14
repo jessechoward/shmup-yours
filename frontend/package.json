@@ -2,6 +2,7 @@
   "name": "@shmup-yours/frontend",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "main": "src/index.js",
   "description": "Frontend SPA for shmup-yours",
   "keywords": ["shmup-yours", "frontend", "spa", "canvas"],
