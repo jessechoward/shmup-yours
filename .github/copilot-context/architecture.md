@@ -46,13 +46,20 @@
 
 ### Visual Layer Structure
 ```
-6. UI Overlay (HUD, chat, scores)
-5. Game Objects (ships, projectiles, effects)  
-4. Terrain Layer (space obstacles, boundaries)
-3. Background Layer 3 (starmap - fastest parallax)
-2. Background Layer 2 (starmap - medium parallax)
-1. Background Layer 1 (starmap - slowest parallax)
+6. UI Overlay (HUD, chat, scores) - Vue.js Components
+5. Game Objects (ships, projectiles, effects) - Canvas Rendering
+4. Terrain Layer (space obstacles, boundaries) - Canvas Rendering
+3. Background Layer 3 (starmap - fastest parallax) - Canvas Rendering
+2. Background Layer 2 (starmap - medium parallax) - Canvas Rendering
+1. Background Layer 1 (starmap - slowest parallax) - Canvas Rendering
 ```
+
+### Frontend Architecture (Vue.js + Canvas)
+- **UI Layer**: Vue.js components for chat, lobby, HUD, menus
+- **Game Layer**: HTML5 Canvas for ships, terrain, effects rendering
+- **State Management**: Pinia store for shared state between UI and Canvas
+- **Communication**: Event-driven patterns with WebSocket integration
+- **Documentation**: See `/docs/architecture/` for detailed Vue.js + Canvas integration patterns
 
 ### Art Direction
 - **Inspiration**: SubSpace/Continuum maps with modern pixel art
