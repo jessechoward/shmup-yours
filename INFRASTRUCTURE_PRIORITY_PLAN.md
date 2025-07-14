@@ -266,6 +266,24 @@ Time Saved: 20 minutes (27% improvement)
 
 ### **📈 Measurement Tools & Automation**
 
+#### **Process Management Toolset:**
+- ✅ **Process Dashboard**: `./scripts/process-dashboard.sh` - Human-readable status overview
+- ✅ **Structured Data**: `./scripts/process-status.json.sh` - Machine-readable status for analysis
+- ✅ **Action-Oriented Output**: Focus on what humans need to do, not implementation details
+- ✅ **Priority-Based Recommendations**: High/Medium/Low action classification
+
+#### **Dashboard Features:**
+```bash
+# Quick Process Status (Human-readable)
+./scripts/process-dashboard.sh
+
+# Structured Data Output (Machine-readable)
+./scripts/process-status.json.sh | jq '.'
+
+# Quick Action Summary
+./scripts/process-dashboard.sh | grep -A5 "RECOMMENDED ACTIONS"
+```
+
 #### **Current Capabilities:**
 - ✅ **GitHub Native Labels**: `sli-slo:pickup-time`, `sli-slo:velocity`, `sli-slo:review-time`
 - ✅ **Performance Labels**: `slo-success`, `slo-violation` for quick filtering
