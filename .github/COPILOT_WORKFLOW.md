@@ -125,24 +125,54 @@ When Copilot finishes a task:
 
 ## Escalation Procedures
 
-### Time-Box Overruns
-If implementation exceeds 20 minutes:
+### Automatic Escalation Triggers
+When any of these conditions occur, agents must escalate using the escalation workflow:
+
+1. **3-Iteration Limit Reached:** Agent has completed 3 time-boxed attempts without meeting success criteria
+2. **Quality Gates Failed:** Unable to achieve 90% function coverage or 80% decision coverage after 3 iterations
+3. **Unresolvable Technical Blocker:** External dependencies, API limitations, or architecture constraints
+4. **Scope Expansion Beyond Estimates:** Requirements grew >50% during implementation
+
+### Escalation Process (See .github/ESCALATION_WORKFLOW.md)
+
+**Step 1: Agent Preparation (5 minutes)**
+1. **Commit Current Work:** Preserve all progress in feature branch
+2. **Create Escalation Issue:** Use `.github/ISSUE_TEMPLATE/escalation.md` template
+3. **Document Evidence:** Capture logs, test results, quality metrics
+
+**Step 2: Automatic Assignment**
+Escalation issues auto-assign based on type:
+- Backend issues → @backend-team-lead
+- Frontend issues → @frontend-team-lead  
+- Infrastructure → @devops-lead
+- Cross-cutting → @tech-lead
+
+**Step 3: Human Review (30-60 minutes)**
+- Root cause analysis using `.github/copilot-tasks/escalation-analysis.md`
+- Resolution strategy selection (revised agent approach/human takeover/decomposition)
+- Process improvement opportunity identification
+
+### Legacy Escalation Procedures (For Reference)
+
+**Time-Box Overruns (Pre-3-Iteration Process):**
+If implementation exceeds 20 minutes in single iteration:
 1. **Stop Work:** Comment on issue with current status
 2. **Analyze Scope:** Determine if task needs breakdown
 3. **Create Sub-Issues:** Split large task into smaller ones
 4. **Update Estimates:** Revise time estimates based on learning
 
-### Quality Issues
-If tests fail or code quality issues:
-1. **Create Bug Issue:** Document specific problems
-2. **Link Dependencies:** Block original issue on bug fix
-3. **Prioritize Fix:** Mark as high priority for quick resolution
+**Quality Issues:**
+If tests fail or code quality issues during any iteration:
+1. **Continue Within Iteration Limit:** Use remaining iterations to resolve
+2. **Escalate if Unresolved:** After 3 iterations, follow escalation process
+3. **Document Technical Debt:** If accepting reduced quality for delivery
 
-### Scope Creep
+**Scope Creep:**
 If requirements expand during implementation:
 1. **Complete Core Task:** Finish original scope only
 2. **Create Follow-up Issues:** For additional scope
 3. **Link Related Work:** Maintain traceability
+4. **Escalate if Scope Doubles:** Use escalation process for major expansion
 
 ## Integration with Task Templates
 
@@ -191,6 +221,14 @@ jobs:
 - "copilot-in-progress" - Currently being worked on
 - "copilot-review" - Implementation complete, needs review
 - "copilot-blocked" - Waiting for dependencies
+
+# Escalation workflow labels:
+- "type/escalation" - Issue escalated for human intervention
+- "status/escalated" - Currently in escalation review process
+- "escalation/3-iteration-limit" - Agent reached maximum iteration attempts
+- "escalation/technical-blocker" - Unresolvable technical dependency
+- "escalation/scope-expansion" - Requirements expanded beyond estimates
+- "escalation/quality-gates" - Unable to meet coverage requirements
 ```
 
 ## Monitoring and Metrics
@@ -200,6 +238,27 @@ jobs:
 - **Time Accuracy:** Estimated vs actual implementation time
 - **Quality Metrics:** Test coverage, bug rate, rework frequency
 - **Dependency Resolution:** Time to resolve blocking issues
+- **Escalation Metrics:** Escalation rate, resolution time, process improvements
+
+### Escalation Dashboard
+```markdown
+## Weekly Escalation Performance
+**Total Issues:** 45
+**Escalations:** 8 (17.8% - Target: <20%)
+**Escalation Breakdown:**
+- 3-iteration limit: 5 (62.5%)
+- Technical blockers: 2 (25%)
+- Scope expansion: 1 (12.5%)
+
+**Resolution Outcomes:**
+- Revised agent approach: 3 (37.5%)
+- Human takeover: 3 (37.5%)  
+- Issue breakdown: 2 (25%)
+
+**Average Resolution Time:** 45 minutes (Target: <60 min)
+**Process Improvement Items:** 12 identified
+**Template Updates:** 3 templates enhanced
+```
 
 ### Dashboard Metrics
 ```markdown
@@ -209,6 +268,7 @@ jobs:
 **Time Accuracy:** 85% within estimates
 **Quality Score:** 92% (tests pass, no regressions)
 **Escalations:** 2 (both scope creep, properly handled)
+**Escalation Resolution:** Average 45 minutes
 ```
 
 ## Getting Started
