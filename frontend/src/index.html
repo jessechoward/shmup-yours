@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shmup-Yours - Canvas 5-Layer Rendering</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+        }
+        
+        #gameContainer {
+            position: relative;
+            width: 1024px;
+            height: 768px;
+            border: 2px solid #333;
+            overflow: hidden;
+        }
+        
+        .canvas-layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 1024px;
+            height: 768px;
+        }
+        
+        #debugInfo {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            color: #0f0;
+            font-size: 12px;
+            background: rgba(0,0,0,0.7);
+            padding: 5px;
+            border-radius: 3px;
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body>
+    <div id="gameContainer">
+        <!-- Layer 1: Background Stars (Slowest) -->
+        <canvas id="backgroundLayer1" class="canvas-layer" width="1024" height="768"></canvas>
+        
+        <!-- Layer 2: Background Stars (Medium) -->
+        <canvas id="backgroundLayer2" class="canvas-layer" width="1024" height="768"></canvas>
+        
+        <!-- Layer 3: Background Stars (Fastest) -->
+        <canvas id="backgroundLayer3" class="canvas-layer" width="1024" height="768"></canvas>
+        
+        <!-- Layer 4: Terrain/Obstacles -->
+        <canvas id="terrainLayer" class="canvas-layer" width="1024" height="768"></canvas>
+        
+        <!-- Layer 5: Game Objects (Ships, Projectiles) -->
+        <canvas id="gameObjectsLayer" class="canvas-layer" width="1024" height="768"></canvas>
+        
+        <div id="debugInfo">
+            <div>FPS: <span id="fps">60</span></div>
+            <div>World Position: <span id="worldPos">0, 0</span></div>
+            <div>Camera Position: <span id="cameraPos">0, 0</span></div>
+        </div>
+    </div>
+
+    <script type="module" src="rendering/CanvasLayerManager.js"></script>
+    <script type="module" src="rendering/CoordinateSystem.js"></script>
+    <script type="module" src="rendering/ParallaxRenderer.js"></script>
+    <script type="module" src="rendering/TerrainRenderer.js"></script>
+    <script type="module" src="rendering/GameObjectRenderer.js"></script>
+    <script type="module" src="demo.js"></script>
+</body>
+</html>
