@@ -3,6 +3,17 @@
 ## 📖 Analysis Objective
 Break down user story into 15-20 minute implementation tasks with clear scope boundaries.
 
+## 🛡️ Quality Gate Compliance
+**Pre-Task Validation:**
+- [ ] Quality hooks are active and functional
+- [ ] Documentation tools are available
+
+**Resolution Playbook References:**
+- Package Manager Issues: `.github/hooks/package-manager-errors.md`
+- ESLint/Quality Issues: `.github/hooks/eslint-errors.md`
+- Performance Issues: `.github/hooks/performance-errors.md`
+- Emergency Procedures: `.github/hooks/emergency-overrides.md`
+
 ## 📋 Source Story
 **User Story:** #123  
 **Story Text:**

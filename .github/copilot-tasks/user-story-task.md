@@ -34,3 +34,14 @@
 **Estimated Effort:** [Small/Medium/Large]  
 **Priority:** [High/Medium/Low]  
 **Time Box:** 15-20 minutes for story definition
+
+## 🛡️ Quality Gate Compliance
+**Pre-Implementation Validation:**
+- [ ] Quality hooks are active and functional
+- [ ] Documentation tools are available
+
+**Resolution Playbook References:**
+- Package Manager Issues: `.github/hooks/package-manager-errors.md`
+- ESLint/Quality Issues: `.github/hooks/eslint-errors.md`  
+- Performance Issues: `.github/hooks/performance-errors.md`
+- Emergency Procedures: `.github/hooks/emergency-overrides.md`

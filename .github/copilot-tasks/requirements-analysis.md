@@ -3,6 +3,17 @@
 ## 📖 Analysis Objective
 Break down a user story or feature into implementable technical requirements.
 
+## 🛡️ Quality Gate Compliance
+**Pre-Task Validation:**
+- [ ] Quality hooks are active and functional
+- [ ] Documentation tools are available
+
+**Resolution Playbook References:**
+- Package Manager Issues: `.github/hooks/package-manager-errors.md`
+- ESLint/Quality Issues: `.github/hooks/eslint-errors.md`
+- Performance Issues: `.github/hooks/performance-errors.md`
+- Emergency Procedures: `.github/hooks/emergency-overrides.md`
+
 ## 📋 Source Material
 **User Story:** #123 (link to user story task)
 **Story Summary:**
@@ -15,6 +26,17 @@ So that [benefit]
 **Acceptance Criteria:**
 - Copy acceptance criteria from user story
 - Identify any ambiguities or gaps
+
+## 🛡️ Quality Gate Compliance
+**Pre-Task Validation:**
+- [ ] Quality hooks are active and functional
+- [ ] Documentation tools are available
+
+**Resolution Playbook References:**
+- Package Manager Issues: `.github/hooks/package-manager-errors.md`
+- ESLint/Quality Issues: `.github/hooks/eslint-errors.md`
+- Performance Issues: `.github/hooks/performance-errors.md`
+- Emergency Procedures: `.github/hooks/emergency-overrides.md`
 
 ## 🔧 Technical Breakdown
 **Component Analysis:**
@@ -70,6 +92,17 @@ Research (if needed) → Backend Feature → Backend Tests
 **Parallel Opportunities:**
 - Backend and Frontend features can be developed simultaneously
 - Tests can be written in parallel with features
+
+## 🛡️ Quality Gate Compliance
+**Pre-Task Validation:**
+- [ ] Quality hooks are active and functional
+- [ ] Documentation tools are available
+
+**Resolution Playbook References:**
+- Package Manager Issues: `.github/hooks/package-manager-errors.md`
+- ESLint/Quality Issues: `.github/hooks/eslint-errors.md`
+- Performance Issues: `.github/hooks/performance-errors.md`
+- Emergency Procedures: `.github/hooks/emergency-overrides.md`
 
 ## 📋 Definition of Ready
 **Each Task Should Include:**
