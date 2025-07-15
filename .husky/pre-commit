@@ -121,7 +121,27 @@ else
     print_info "No dependencies found in package.json files"
 fi
 
-# 4. Performance check - ensure hook runs quickly
+# 4. Check for branch synchronization issues (especially for GitHub Copilot agents)
+echo
+print_info "🔄 Checking branch synchronization..."
+
+# Check if we're on a feature branch and if yarn.lock differs from main
+if command -v git >/dev/null 2>&1; then
+    CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD 2>/dev/null || echo "unknown")
+    
+    if [ "$CURRENT_BRANCH" != "main" ] && [ "$CURRENT_BRANCH" != "unknown" ]; then
+        # Check if yarn.lock exists and differs from main
+        if [ -f "./yarn.lock" ] && git show main:yarn.lock >/dev/null 2>&1; then
+            if ! git diff --quiet main HEAD -- yarn.lock 2>/dev/null; then
+                print_info "📋 Branch '$CURRENT_BRANCH' has yarn.lock differences from main"
+                echo "  This is normal if you've added dependencies, but ensure you're building"
+                echo "  on the latest infrastructure by running: git rebase origin/main"
+            fi
+        fi
+    fi
+fi
+
+# 5. Performance check - ensure hook runs quickly
 HOOK_END_TIME=$(date +%s%N)
 HOOK_START_TIME=${HOOK_START_TIME:-$HOOK_END_TIME}
 HOOK_DURATION=$((($HOOK_END_TIME - $HOOK_START_TIME) / 1000000)) # Convert to milliseconds
@@ -138,6 +158,13 @@ if [ "$HAS_ERRORS" = true ]; then
     echo
     print_info "This hook enforces yarn usage to prevent package manager conflicts."
     print_info "For more information, see the project's CONTRIBUTING.md file."
+    echo
+    print_info "💡 GitHub Copilot Agent Tip:"
+    echo "  If your branch is behind main and yarn.lock has been updated:"
+    echo "  1. Sync your branch with main: git rebase origin/main"
+    echo "  2. Run yarn install to update dependencies"
+    echo "  3. Commit any yarn.lock changes before implementing features"
+    echo "  4. This ensures your implementation builds on the latest infrastructure"
     exit 1
 else
     echo
