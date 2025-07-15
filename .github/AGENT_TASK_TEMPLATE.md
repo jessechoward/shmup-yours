@@ -82,6 +82,11 @@ gh pr list --state open --author app/copilot-swe-agent
 - **30-90 minutes:** PR creation for implementation tasks
 - **1-3 hours:** Research task completion
 
+### ✅ Verified Performance (July 15, 2025)
+- **Task #51 (PR Status Fix):** 48 minutes total - EXCELLENT
+- **Task #52 (Strategic Research):** 45 minutes total - OUTSTANDING
+- **Both agents exceeded expectations** - delivered strategic quality in tactical timeframes
+
 ### Troubleshooting
 - **No eyes emoji:** Check assignee field shows "Copilot"
 - **No agent response:** Verify repository has Copilot access
@@ -116,6 +121,29 @@ gh pr list --state open --author app/copilot-swe-agent
 2. **[Secondary Output]** - [Description]  
 3. **Implementation Plan** - Step-by-step deployment
 
+## PR Creation Requirements
+**CRITICAL:** When work is complete, create PR as **READY FOR REVIEW** (not draft)
+
+### Step-by-Step PR Creation:
+1. **Verify work is complete:** All deliverables met, tests passing
+2. **Create PR as READY:** `gh pr create --title "..." --body "..."` (NO --draft flag)
+3. **Verify PR status:** Confirm `isDraft: false` in GitHub
+4. **If accidentally created as draft:** Run `gh pr ready <pr-number>` to convert
+
+### Commands:
+```bash
+# Create READY PR (default behavior)
+gh pr create --title "[Type]: Brief description" --body-file .github/pull_request_template.md
+
+# Verify it's ready (should show isDraft: false)
+gh pr view <pr-number> --json isDraft
+
+# Convert draft to ready if needed
+gh pr ready <pr-number>
+```
+
+**Follow:** `.github/PR_STATUS_RULES.md` decision tree
+
 ## Time Constraints
 - Research: 30-45 minutes
 - Implementation: 15-30 minutes
@@ -135,6 +163,16 @@ gh pr list --state open --author app/copilot-swe-agent
 1. **Problem Analysis** - `01-problem-analysis.md`
 2. **Solution Investigation** - `02-solution-investigation.md`  
 3. **Recommendation Summary** - `03-executive-summary.md`
+
+## PR Creation Requirements
+**CRITICAL:** Create PR as **READY FOR REVIEW** when research is complete
+```bash
+# Create READY PR (not draft)
+gh pr create --title "Research: [Topic] - [Key Finding]" --body-file .github/pull_request_template.md
+
+# Verify ready status
+gh pr view <pr-number> --json isDraft
+```
 
 ## Time Constraints
 - Total research: 2-3 hours maximum
