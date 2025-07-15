@@ -64,7 +64,7 @@ class MapSystem {
     /**
      * Generate new map based on player count
      * @param {number} playerCount - Number of active players
-     * @returns {Promise<Object>} Generated map configuration
+     * @returns {Promise<object>} Generated map configuration
      */
     async generateMap(playerCount) {
         if (!this.isInitialized) {
@@ -98,7 +98,7 @@ class MapSystem {
     /**
      * Update map system each frame
      * @param {Array} players - Array of player objects
-     * @param {Object} viewport - Current viewport {x, y, width, height}
+     * @param {object} viewport - Current viewport {x, y, width, height}
      */
     update(players, viewport) {
         if (!this.currentMap) return;
@@ -113,8 +113,8 @@ class MapSystem {
     /**
      * Render map to canvas context
      * @param {CanvasRenderingContext2D} ctx - Canvas rendering context
-     * @param {Object} viewport - Current viewport {x, y, width, height}
-     * @param {Object} camera - Camera transform {x, y, scale}
+     * @param {object} viewport - Current viewport {x, y, width, height}
+     * @param {object} camera - Camera transform {x, y, scale}
      */
     render(ctx, viewport, camera) {
         if (!this.currentMap || !this.assetManager.isReady()) return;
@@ -152,8 +152,8 @@ class MapSystem {
     /**
      * Render parallax background layers
      * @param {CanvasRenderingContext2D} ctx - Canvas context
-     * @param {Object} viewport - Current viewport
-     * @param {Object} camera - Camera transform
+     * @param {object} viewport - Current viewport
+     * @param {object} camera - Camera transform
      */
     renderBackgroundLayers(ctx, viewport, camera) {
         this.currentMap.backgroundLayers.forEach(layer => {
@@ -169,10 +169,10 @@ class MapSystem {
     /**
      * Render a star background layer
      * @param {CanvasRenderingContext2D} ctx - Canvas context
-     * @param {Object} layer - Layer configuration
+     * @param {object} layer - Layer configuration
      * @param {number} offsetX - Parallax X offset
      * @param {number} offsetY - Parallax Y offset
-     * @param {Object} viewport - Current viewport
+     * @param {object} viewport - Current viewport
      */
     renderStarLayer(ctx, layer, offsetX, offsetY, viewport) {
         ctx.fillStyle = this.getStarColor(layer.density);
@@ -198,8 +198,8 @@ class MapSystem {
     /**
      * Render terrain tilemap
      * @param {CanvasRenderingContext2D} ctx - Canvas context
-     * @param {Object} viewport - Current viewport
-     * @param {Object} camera - Camera transform
+     * @param {object} viewport - Current viewport
+     * @param {object} camera - Camera transform
      */
     renderTilemap(ctx, viewport, camera) {
         const tilemap = this.currentMap.tilemap;
@@ -234,8 +234,8 @@ class MapSystem {
     /**
      * Render boundary warning effects
      * @param {CanvasRenderingContext2D} ctx - Canvas context
-     * @param {Object} viewport - Current viewport
-     * @param {Object} camera - Camera transform
+     * @param {object} viewport - Current viewport
+     * @param {object} camera - Camera transform
      */
     renderBoundaryWarnings(ctx, viewport, camera) {
         const boundaryData = this.boundarySystem.getBoundaryData();
@@ -243,7 +243,7 @@ class MapSystem {
         boundaryData.forEach(boundary => {
             // Only render warnings that are visible
             if (this.isRectVisible(boundary.visualWarningZone, viewport)) {
-                ctx.strokeStyle = `rgba(255, 100, 100, 0.3)`;
+                ctx.strokeStyle = 'rgba(255, 100, 100, 0.3)';
                 ctx.lineWidth = 2;
                 ctx.setLineDash([5, 5]);
                 
@@ -261,7 +261,7 @@ class MapSystem {
     
     /**
      * Update visible tiles for rendering optimization
-     * @param {Object} viewport - Current viewport
+     * @param {object} viewport - Current viewport
      */
     updateVisibleTiles(viewport) {
         if (!this.currentMap) return;
@@ -299,7 +299,7 @@ class MapSystem {
     
     /**
      * Get map configuration for physics integration
-     * @returns {Object} Map configuration for physics
+     * @returns {object} Map configuration for physics
      */
     getPhysicsConfiguration() {
         if (!this.currentMap) return null;
@@ -339,10 +339,10 @@ class MapSystem {
      */
     getStarColor(density) {
         switch (density) {
-            case 'sparse': return '#ffffff';
-            case 'medium': return '#e2e8f0';
-            case 'dense': return '#cbd5e0';
-            default: return '#ffffff';
+        case 'sparse': return '#ffffff';
+        case 'medium': return '#e2e8f0';
+        case 'dense': return '#cbd5e0';
+        default: return '#ffffff';
         }
     }
     
@@ -376,8 +376,8 @@ class MapSystem {
     
     /**
      * Check if rectangle is visible in viewport
-     * @param {Object} rect - Rectangle {x, y, width, height}
-     * @param {Object} viewport - Viewport {x, y, width, height}
+     * @param {object} rect - Rectangle {x, y, width, height}
+     * @param {object} viewport - Viewport {x, y, width, height}
      * @returns {boolean} True if rectangle is visible
      */
     isRectVisible(rect, viewport) {
@@ -398,7 +398,7 @@ class MapSystem {
     
     /**
      * Get performance metrics
-     * @returns {Object} Performance metrics
+     * @returns {object} Performance metrics
      */
     getMetrics() {
         return { ...this.metrics };

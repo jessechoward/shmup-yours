@@ -26,7 +26,7 @@ class MapSystemExample {
     /**
      * Initialize the example
      * @param {HTMLCanvasElement} canvas - Canvas element for rendering
-     * @param {Object} physicsWorld - Planck.js physics world instance
+     * @param {object} physicsWorld - Planck.js physics world instance
      */
     async initialize(canvas, physicsWorld) {
         this.canvas = canvas;
@@ -141,7 +141,7 @@ class MapSystemExample {
     
     /**
      * Update camera to follow a target
-     * @param {Object} target - Target object with position
+     * @param {object} target - Target object with position
      */
     updateCameraFollow(target) {
         if (!target.body) return;
@@ -208,29 +208,29 @@ class MapSystemExample {
         const speed = 10;
         
         switch (event.key) {
-            case 'ArrowUp':
-            case 'w':
-                this.camera.y -= speed;
-                break;
-            case 'ArrowDown':
-            case 's':
-                this.camera.y += speed;
-                break;
-            case 'ArrowLeft':
-            case 'a':
-                this.camera.x -= speed;
-                break;
-            case 'ArrowRight':
-            case 'd':
-                this.camera.x += speed;
-                break;
-            case '=':
-            case '+':
-                this.camera.scale = Math.min(2, this.camera.scale + 0.1);
-                break;
-            case '-':
-                this.camera.scale = Math.max(0.5, this.camera.scale - 0.1);
-                break;
+        case 'ArrowUp':
+        case 'w':
+            this.camera.y -= speed;
+            break;
+        case 'ArrowDown':
+        case 's':
+            this.camera.y += speed;
+            break;
+        case 'ArrowLeft':
+        case 'a':
+            this.camera.x -= speed;
+            break;
+        case 'ArrowRight':
+        case 'd':
+            this.camera.x += speed;
+            break;
+        case '=':
+        case '+':
+            this.camera.scale = Math.min(2, this.camera.scale + 0.1);
+            break;
+        case '-':
+            this.camera.scale = Math.max(0.5, this.camera.scale - 0.1);
+            break;
         }
     }
     

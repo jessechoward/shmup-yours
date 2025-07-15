@@ -149,7 +149,7 @@ export class ParallaxRenderer {
      * @param {CanvasRenderingContext2D} context - Canvas context
      * @param {number} x - Screen X coordinate
      * @param {number} y - Screen Y coordinate
-     * @param {Object} star - Star object
+     * @param {object} star - Star object
      * @param {number} deltaTime - Time since last frame
      */
     renderStar(context, x, y, star, deltaTime) {
@@ -222,7 +222,7 @@ export class ParallaxRenderer {
     /**
      * Get configuration for a specific layer
      * @param {string} layerName - Name of the layer
-     * @returns {Object} Layer configuration
+     * @returns {object} Layer configuration
      */
     getLayerConfig(layerName) {
         return this.layers[layerName];
@@ -231,7 +231,7 @@ export class ParallaxRenderer {
     /**
      * Update layer configuration
      * @param {string} layerName - Name of the layer
-     * @param {Object} config - New configuration
+     * @param {object} config - New configuration
      */
     updateLayerConfig(layerName, config) {
         if (this.layers[layerName]) {

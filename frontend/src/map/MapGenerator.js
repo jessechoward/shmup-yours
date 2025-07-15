@@ -39,7 +39,7 @@ class MapGenerator {
     /**
      * Generate map based on player count
      * @param {number} playerCount - Number of active players (2-20)
-     * @returns {Object} Complete map configuration
+     * @returns {object} Complete map configuration
      */
     generateMap(playerCount) {
         const mapSize = this.calculateMapSize(playerCount);
@@ -64,7 +64,7 @@ class MapGenerator {
     /**
      * Calculate map dimensions based on player count
      * @param {number} playerCount 
-     * @returns {Object} Map dimensions
+     * @returns {object} Map dimensions
      */
     calculateMapSize(playerCount) {
         // Scale factor based on player count
@@ -101,7 +101,7 @@ class MapGenerator {
     
     /**
      * Generate strategic obstacle layout using space junk theme
-     * @param {Object} mapSize - Map dimensions
+     * @param {object} mapSize - Map dimensions
      * @param {number} playerCount - Number of players for density calculation
      * @returns {Array} Array of obstacle definitions
      */
@@ -141,7 +141,7 @@ class MapGenerator {
     
     /**
      * Generate obstacle clusters for strategic cover placement
-     * @param {Object} mapSize - Map dimensions
+     * @param {object} mapSize - Map dimensions
      * @param {number} targetTiles - Target number of obstacle tiles
      * @returns {Array} Array of obstacle clusters
      */
@@ -186,47 +186,47 @@ class MapGenerator {
      * @param {number} centerY - Cluster center Y coordinate
      * @param {string} shape - Cluster shape type
      * @param {number} size - Number of tiles in cluster
-     * @param {Object} mapSize - Map boundaries
+     * @param {object} mapSize - Map boundaries
      * @returns {Array} Array of tile coordinates
      */
     generateClusterTiles(centerX, centerY, shape, size, mapSize) {
         const tiles = [];
         
         switch (shape) {
-            case 'l_shape':
-                // Create L-shaped cover
-                for (let i = 0; i < Math.min(size, 6); i++) {
-                    if (i < 3) {
-                        tiles.push({ x: centerX + i, y: centerY });
-                    } else {
-                        tiles.push({ x: centerX, y: centerY + (i - 2) });
-                    }
+        case 'l_shape':
+            // Create L-shaped cover
+            for (let i = 0; i < Math.min(size, 6); i++) {
+                if (i < 3) {
+                    tiles.push({ x: centerX + i, y: centerY });
+                } else {
+                    tiles.push({ x: centerX, y: centerY + (i - 2) });
                 }
-                break;
+            }
+            break;
                 
-            case 'linear':
-                // Create linear cover (horizontal or vertical)
-                const horizontal = Math.random() > 0.5;
-                for (let i = 0; i < Math.min(size, 5); i++) {
-                    if (horizontal) {
-                        tiles.push({ x: centerX + i - 2, y: centerY });
-                    } else {
-                        tiles.push({ x: centerX, y: centerY + i - 2 });
-                    }
+        case 'linear':
+            // Create linear cover (horizontal or vertical)
+            const horizontal = Math.random() > 0.5;
+            for (let i = 0; i < Math.min(size, 5); i++) {
+                if (horizontal) {
+                    tiles.push({ x: centerX + i - 2, y: centerY });
+                } else {
+                    tiles.push({ x: centerX, y: centerY + i - 2 });
                 }
-                break;
+            }
+            break;
                 
-            case 'compact':
-                // Create compact 2x2 or 3x3 cover
-                const compactSize = size <= 4 ? 2 : 3;
-                for (let x = 0; x < compactSize; x++) {
-                    for (let y = 0; y < compactSize; y++) {
-                        if (tiles.length < size) {
-                            tiles.push({ x: centerX + x - 1, y: centerY + y - 1 });
-                        }
+        case 'compact':
+            // Create compact 2x2 or 3x3 cover
+            const compactSize = size <= 4 ? 2 : 3;
+            for (let x = 0; x < compactSize; x++) {
+                for (let y = 0; y < compactSize; y++) {
+                    if (tiles.length < size) {
+                        tiles.push({ x: centerX + x - 1, y: centerY + y - 1 });
                     }
                 }
-                break;
+            }
+            break;
         }
         
         // Filter tiles to ensure they're within map bounds
@@ -238,8 +238,8 @@ class MapGenerator {
     
     /**
      * Generate floating boundary system to prevent infinite drift
-     * @param {Object} mapSize - Map dimensions
-     * @returns {Object} Boundary configuration
+     * @param {object} mapSize - Map dimensions
+     * @returns {object} Boundary configuration
      */
     generateBoundarySystem(mapSize) {
         return {
@@ -287,7 +287,7 @@ class MapGenerator {
     
     /**
      * Generate parallax background layers for visual depth
-     * @param {Object} mapSize - Map dimensions
+     * @param {object} mapSize - Map dimensions
      * @returns {Array} Background layer configuration
      */
     generateBackgroundLayers(mapSize) {
@@ -321,9 +321,9 @@ class MapGenerator {
     
     /**
      * Generate tilemap data structure for rendering and collision
-     * @param {Object} mapSize - Map dimensions
+     * @param {object} mapSize - Map dimensions
      * @param {Array} obstacles - Obstacle layout
-     * @returns {Object} Tilemap configuration
+     * @returns {object} Tilemap configuration
      */
     generateTilemap(mapSize, obstacles) {
         // Create empty tilemap grid

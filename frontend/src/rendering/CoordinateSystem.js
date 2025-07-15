@@ -31,9 +31,9 @@ export class CoordinateSystem {
     setCameraPosition(x, y) {
         // Clamp camera to world bounds
         this.cameraX = Math.max(this.VIEWPORT_WIDTH / 2, 
-                        Math.min(this.worldWidth - this.VIEWPORT_WIDTH / 2, x));
+            Math.min(this.worldWidth - this.VIEWPORT_WIDTH / 2, x));
         this.cameraY = Math.max(this.VIEWPORT_HEIGHT / 2, 
-                        Math.min(this.worldHeight - this.VIEWPORT_HEIGHT / 2, y));
+            Math.min(this.worldHeight - this.VIEWPORT_HEIGHT / 2, y));
     }
     
     /**

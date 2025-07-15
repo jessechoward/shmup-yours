@@ -72,7 +72,7 @@ export class GameObjectRenderer {
     /**
      * Add a game object to the renderer
      * @param {string} category - Object category (ships, projectiles, effects, pickups)
-     * @param {Object} object - Game object with position, type, and properties
+     * @param {object} object - Game object with position, type, and properties
      */
     addObject(category, object) {
         if (this.gameObjects[category]) {
@@ -85,7 +85,7 @@ export class GameObjectRenderer {
     /**
      * Remove a game object from the renderer
      * @param {string} category - Object category
-     * @param {Object} object - Game object to remove
+     * @param {object} object - Game object to remove
      */
     removeObject(category, object) {
         if (this.gameObjects[category]) {
@@ -165,7 +165,7 @@ export class GameObjectRenderer {
     
     /**
      * Check if an object should be rendered (viewport culling)
-     * @param {Object} object - Game object
+     * @param {object} object - Game object
      * @returns {boolean} True if object should be rendered
      */
     shouldRenderObject(object) {
@@ -182,7 +182,7 @@ export class GameObjectRenderer {
     /**
      * Render a single game object
      * @param {CanvasRenderingContext2D} context - Canvas context
-     * @param {Object} object - Game object
+     * @param {object} object - Game object
      * @param {number} deltaTime - Time since last frame
      */
     renderObject(context, object, deltaTime) {
@@ -209,26 +209,26 @@ export class GameObjectRenderer {
         
         // Render based on shape type
         switch (config.shape) {
-            case 'triangle':
-                this.renderTriangle(context, config, object);
-                break;
-            case 'circle':
-                this.renderCircle(context, config, object);
-                break;
-            case 'rectangle':
-                this.renderRectangle(context, config, object);
-                break;
-            case 'explosion':
-                this.renderExplosion(context, config, object, deltaTime);
-                break;
-            case 'thrust':
-                this.renderThrust(context, config, object, deltaTime);
-                break;
-            case 'plus':
-                this.renderPlus(context, config, object);
-                break;
-            default:
-                this.renderCircle(context, config, object); // Fallback
+        case 'triangle':
+            this.renderTriangle(context, config, object);
+            break;
+        case 'circle':
+            this.renderCircle(context, config, object);
+            break;
+        case 'rectangle':
+            this.renderRectangle(context, config, object);
+            break;
+        case 'explosion':
+            this.renderExplosion(context, config, object, deltaTime);
+            break;
+        case 'thrust':
+            this.renderThrust(context, config, object, deltaTime);
+            break;
+        case 'plus':
+            this.renderPlus(context, config, object);
+            break;
+        default:
+            this.renderCircle(context, config, object); // Fallback
         }
         
         context.restore();
@@ -237,8 +237,8 @@ export class GameObjectRenderer {
     /**
      * Render a triangle (typically for ships)
      * @param {CanvasRenderingContext2D} context - Canvas context
-     * @param {Object} config - Object type configuration
-     * @param {Object} object - Game object
+     * @param {object} config - Object type configuration
+     * @param {object} object - Game object
      */
     renderTriangle(context, config, object) {
         const size = object.size || config.size;
@@ -261,8 +261,8 @@ export class GameObjectRenderer {
     /**
      * Render a circle
      * @param {CanvasRenderingContext2D} context - Canvas context
-     * @param {Object} config - Object type configuration
-     * @param {Object} object - Game object
+     * @param {object} config - Object type configuration
+     * @param {object} object - Game object
      */
     renderCircle(context, config, object) {
         const size = object.size || config.size;
@@ -281,8 +281,8 @@ export class GameObjectRenderer {
     /**
      * Render a rectangle
      * @param {CanvasRenderingContext2D} context - Canvas context
-     * @param {Object} config - Object type configuration
-     * @param {Object} object - Game object
+     * @param {object} config - Object type configuration
+     * @param {object} object - Game object
      */
     renderRectangle(context, config, object) {
         const size = object.size || config.size;
@@ -301,8 +301,8 @@ export class GameObjectRenderer {
     /**
      * Render an explosion effect
      * @param {CanvasRenderingContext2D} context - Canvas context
-     * @param {Object} config - Object type configuration
-     * @param {Object} object - Game object
+     * @param {object} config - Object type configuration
+     * @param {object} object - Game object
      * @param {number} deltaTime - Time since last frame
      */
     renderExplosion(context, config, object, deltaTime) {
@@ -331,8 +331,8 @@ export class GameObjectRenderer {
     /**
      * Render thrust effect
      * @param {CanvasRenderingContext2D} context - Canvas context
-     * @param {Object} config - Object type configuration
-     * @param {Object} object - Game object
+     * @param {object} config - Object type configuration
+     * @param {object} object - Game object
      * @param {number} deltaTime - Time since last frame
      */
     renderThrust(context, config, object, deltaTime) {
@@ -355,8 +355,8 @@ export class GameObjectRenderer {
     /**
      * Render plus shape (for pickups)
      * @param {CanvasRenderingContext2D} context - Canvas context
-     * @param {Object} config - Object type configuration
-     * @param {Object} object - Game object
+     * @param {object} config - Object type configuration
+     * @param {object} object - Game object
      */
     renderPlus(context, config, object) {
         const size = object.size || config.size;
@@ -424,7 +424,7 @@ export class GameObjectRenderer {
     
     /**
      * Get object count by category
-     * @returns {Object} Object counts by category
+     * @returns {object} Object counts by category
      */
     getObjectCounts() {
         const counts = {};

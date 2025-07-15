@@ -5,6 +5,8 @@
  * Use MapSystem as the main entry point for all map operations.
  */
 
+import MapSystem from './MapSystem.js';
+
 export { default as MapSystem } from './MapSystem.js';
 export { default as MapGenerator } from './MapGenerator.js';
 export { default as BoundarySystem } from './BoundarySystem.js';

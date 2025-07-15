@@ -1,11 +1,14 @@
 #!/bin/bash
 
-# Package Manager Enforcement Pre-commit Hook
-# Enforces yarn usage and prevents npm package-lock.json conflicts
+# Comprehensive Pre-commit Hook for shmup-yours
+# Package Manager Enforcement + ESLint Enforcement with educational error messages
 
 set -e
 
-echo "🔍 Checking package manager enforcement..."
+# Performance tracking
+HOOK_START_TIME=$(date +%s%N)
+
+echo "🔍 Running pre-commit quality checks..."
 
 # Colors for output (disable if not in a terminal)
 if [ -t 1 ]; then
@@ -42,9 +45,14 @@ print_info() {
 # Track if any errors were found
 HAS_ERRORS=false
 
-# 1. Check for package-lock.json files
+# ============================================================================
+# SECTION 1: Package Manager Enforcement
+# ============================================================================
+
 echo
-print_info "🔍 Checking for package-lock.json files..."
+print_info "🔍 Checking package manager enforcement..."
+
+# 1. Check for package-lock.json files
 if find . -name "package-lock.json" -not -path "./node_modules/*" | grep -q "package-lock.json"; then
     print_error "package-lock.json files detected in the repository!"
     echo
@@ -65,10 +73,7 @@ else
 fi
 
 # 2. Check for npm commands in package.json scripts
-echo
-print_info "🔍 Checking for npm commands in package.json scripts..."
 NPM_SCRIPTS_FOUND=false
-
 for package_file in $(find . -name "package.json" -not -path "./node_modules/*"); do
     if grep -q '"scripts"' "$package_file"; then
         # Extract scripts section and check for npm commands
@@ -93,11 +98,7 @@ if [ "$NPM_SCRIPTS_FOUND" = false ]; then
 fi
 
 # 3. Check that yarn.lock exists when package.json has dependencies
-echo
-print_info "🔍 Checking yarn.lock consistency..."
 PACKAGE_JSON_WITH_DEPS=false
-
-# Check if any package.json files have dependencies
 for package_file in $(find . -name "package.json" -not -path "./node_modules/*"); do
     if grep -q '"dependencies"\|"devDependencies"' "$package_file"; then
         PACKAGE_JSON_WITH_DEPS=true
@@ -121,34 +122,55 @@ else
     print_info "No dependencies found in package.json files"
 fi
 
-# 4. Check for branch synchronization issues (especially for GitHub Copilot agents)
-echo
-print_info "🔄 Checking branch synchronization..."
+# ============================================================================
+# SECTION 2: ESLint Enforcement  
+# ============================================================================
 
-# Check if we're on a feature branch and if yarn.lock differs from main
-if command -v git >/dev/null 2>&1; then
-    CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD 2>/dev/null || echo "unknown")
-    
-    if [ "$CURRENT_BRANCH" != "main" ] && [ "$CURRENT_BRANCH" != "unknown" ]; then
-        # Check if yarn.lock exists and differs from main
-        if [ -f "./yarn.lock" ] && git show main:yarn.lock >/dev/null 2>&1; then
-            if ! git diff --quiet main HEAD -- yarn.lock 2>/dev/null; then
-                print_info "📋 Branch '$CURRENT_BRANCH' has yarn.lock differences from main"
-                echo "  This is normal if you've added dependencies, but ensure you're building"
-                echo "  on the latest infrastructure by running: git rebase origin/main"
-            fi
-        fi
-    fi
+echo
+print_info "📝 Checking code style (ESLint)..."
+
+# Run lint-staged for performance (only staged files)
+if ! yarn lint:staged; then
+    print_error "ESLint violations detected"
+    echo
+    print_info "💡 Quick fixes to try:"
+    echo "   yarn lint:fix           # Auto-fix many issues"
+    echo "   yarn workspace frontend lint:fix"
+    echo "   yarn workspace backend lint:fix"
+    echo
+    print_info "🆘 Emergency override (use sparingly):"
+    echo "   git commit --no-verify  # Bypasses all hooks"
+    echo
+    print_info "📖 Full documentation: docs/ESLINT_SETUP.md"
+    HAS_ERRORS=true
+else
+    print_success "ESLint checks passed"
 fi
 
-# 5. Performance check - ensure hook runs quickly
+# ============================================================================
+# SECTION 3: Performance Check & Final Result
+# ============================================================================
+
+# Performance check - ensure hook runs quickly
 HOOK_END_TIME=$(date +%s%N)
-HOOK_START_TIME=${HOOK_START_TIME:-$HOOK_END_TIME}
 HOOK_DURATION=$((($HOOK_END_TIME - $HOOK_START_TIME) / 1000000)) # Convert to milliseconds
 
-# Only show timing if it took more than 100ms or if explicitly requested
+# Convert to seconds for user display
+HOOK_DURATION_SEC=$((HOOK_DURATION / 1000))
+
+# Show timing if it took more than 100ms or if explicitly requested
 if [ $HOOK_DURATION -gt 100 ] || [ "${SHOW_TIMING}" = "true" ]; then
-    print_info "Hook execution time: ${HOOK_DURATION}ms"
+    if [ $HOOK_DURATION_SEC -gt 30 ]; then
+        print_warning "Performance Warning: Hook took ${HOOK_DURATION_SEC}s (target: <30s)"
+        echo
+        print_info "💡 Performance tips:"
+        echo "   - ESLint cache is enabled"
+        echo "   - Only staged files are checked" 
+        echo "   - Consider .eslintignore for large files"
+        echo
+    else
+        print_info "Hook execution time: ${HOOK_DURATION}ms"
+    fi
 fi
 
 # Final result
@@ -156,17 +178,13 @@ if [ "$HAS_ERRORS" = true ]; then
     echo
     print_error "Pre-commit hook failed! Please fix the issues above before committing."
     echo
-    print_info "This hook enforces yarn usage to prevent package manager conflicts."
-    print_info "For more information, see the project's CONTRIBUTING.md file."
-    echo
-    print_info "💡 GitHub Copilot Agent Tip:"
-    echo "  If your branch is behind main and yarn.lock has been updated:"
-    echo "  1. Sync your branch with main: git rebase origin/main"
-    echo "  2. Run yarn install to update dependencies"
-    echo "  3. Commit any yarn.lock changes before implementing features"
-    echo "  4. This ensures your implementation builds on the latest infrastructure"
+    print_info "This hook enforces package manager consistency and code quality standards."
+    print_info "For more information, see docs/ESLINT_SETUP.md and CONTRIBUTING.md"
     exit 1
 else
     echo
-    print_success "Package manager enforcement checks passed!"
+    print_success "All pre-commit checks passed! ⚡"
+    if [ $HOOK_DURATION_SEC -lt 3 ]; then
+        print_info "Hook completed in ${HOOK_DURATION_SEC}s - excellent performance! 🚀"
+    fi
 fi

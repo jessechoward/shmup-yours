@@ -180,7 +180,7 @@ class TileAssetManager {
     
     /**
      * Generate a canvas for a specific tile type
-     * @param {Object} tileType - Tile type configuration
+     * @param {object} tileType - Tile type configuration
      * @returns {HTMLCanvasElement} Generated tile canvas
      */
     generateTileCanvas(tileType) {
@@ -190,20 +190,20 @@ class TileAssetManager {
         canvas.height = this.tileSize;
         
         switch (tileType.pattern) {
-            case 'metal_panel':
-                this.drawMetalPanel(ctx);
-                break;
-            case 'pipe_segment':
-                this.drawPipeSegment(ctx);
-                break;
-            case 'scattered_debris':
-                this.drawScatteredDebris(ctx);
-                break;
-            case 'hull_plating':
-                this.drawHullPlating(ctx);
-                break;
-            default:
-                this.drawSolidTile(ctx, tileType.color);
+        case 'metal_panel':
+            this.drawMetalPanel(ctx);
+            break;
+        case 'pipe_segment':
+            this.drawPipeSegment(ctx);
+            break;
+        case 'scattered_debris':
+            this.drawScatteredDebris(ctx);
+            break;
+        case 'hull_plating':
+            this.drawHullPlating(ctx);
+            break;
+        default:
+            this.drawSolidTile(ctx, tileType.color);
         }
         
         return canvas;
