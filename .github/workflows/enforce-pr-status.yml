@@ -1,0 +1,112 @@
+name: Enforce PR Status for Agents
+
+on:
+  pull_request:
+    types: [opened, ready_for_review]
+
+jobs:
+  enforce-agent-pr-status:
+    runs-on: ubuntu-latest
+    if: >
+      contains(github.event.pull_request.user.login, 'copilot') ||
+      contains(github.event.pull_request.user.login, 'bot')
+    
+    steps:
+    - name: Check PR Status for Agent PRs
+      uses: actions/github-script@v7
+      with:
+        script: |
+          const { data: pr } = await github.rest.pulls.get({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            pull_number: context.issue.number
+          });
+          
+          console.log(`Checking PR #${pr.number} by ${pr.user.login}`);
+          console.log(`Draft status: ${pr.draft}`);
+          
+          // If agent created a draft PR, fail the check
+          if (pr.draft) {
+            const comment = `⚠️ **Agent PR Status Violation**
+            
+            **Issue:** This PR was created as DRAFT by an agent when work appears complete.
+            
+            **Required Action:** 
+            \`\`\`bash
+            # Convert to ready for review
+            gh pr ready ${pr.number}
+            \`\`\`
+            
+            **Root Cause:** Agent should have followed explicit PR creation steps in task template.
+            
+            **Prevention:** Update agent instructions to include status verification:
+            1. Complete all deliverables
+            2. Create PR without --draft flag  
+            3. Verify \`isDraft: false\` status
+            4. Convert if needed: \`gh pr ready <pr-number>\`
+            
+            See \`.github/PR_STATUS_RULES.md\` for complete guidelines.
+            
+            **This check will pass once PR is marked ready for review.**`;
+            
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: comment
+            });
+            
+            core.setFailed(`Agent created draft PR when work appears complete. Run: gh pr ready ${pr.number}`);
+          } else {
+            console.log('✅ PR correctly created as ready for review');
+          }
+
+  auto-convert-completed-drafts:
+    runs-on: ubuntu-latest
+    if: >
+      github.event.action == 'opened' &&
+      github.event.pull_request.draft == true &&
+      (contains(github.event.pull_request.user.login, 'copilot') ||
+       contains(github.event.pull_request.user.login, 'bot'))
+    
+    steps:
+    - name: Auto-convert if work appears complete
+      uses: actions/github-script@v7
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        script: |
+          const { data: pr } = await github.rest.pulls.get({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            pull_number: context.issue.number
+          });
+          
+          // Check if work appears complete (basic heuristics)
+          const hasTests = pr.additions > 10; // Simple check
+          const hasCommits = pr.commits > 0;
+          const titleIndicatesComplete = !pr.title.toLowerCase().includes('wip');
+          
+          if (hasTests && hasCommits && titleIndicatesComplete) {
+            console.log('Work appears complete, auto-converting draft to ready');
+            
+            await github.rest.pulls.update({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.issue.number,
+              draft: false
+            });
+            
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: `🤖 **Auto-converted from DRAFT to READY**
+              
+              This PR was automatically converted because:
+              - Work appears complete (${pr.additions}+ changes, ${pr.commits} commits)
+              - Title doesn't indicate WIP
+              - Created by agent
+              
+              **For future PRs:** Please follow the explicit steps in task templates to create READY PRs directly.`
+            });
+          }

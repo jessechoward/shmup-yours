@@ -1,0 +1,109 @@
+#!/bin/bash
+
+# Pre-push Hook for shmup-yours
+# Enforces PR creation workflow for agents
+
+set -e
+
+# Colors for output
+if [ -t 1 ]; then
+    RED='\033[0;31m'
+    YELLOW='\033[1;33m'
+    GREEN='\033[0;32m'
+    BLUE='\033[0;34m'
+    NC='\033[0m' # No Color
+else
+    RED=''
+    YELLOW=''
+    GREEN=''
+    BLUE=''
+    NC=''
+fi
+
+print_info() {
+    echo -e "${BLUE}ℹ️  $1${NC}"
+}
+
+print_warning() {
+    echo -e "${YELLOW}⚠️  $1${NC}"
+}
+
+print_error() {
+    echo -e "${RED}❌ $1${NC}"
+}
+
+print_success() {
+    echo -e "${GREEN}✅ $1${NC}"
+}
+
+echo "🚀 Running pre-push workflow checks..."
+
+# Check if this appears to be an agent push
+AUTHOR_NAME=$(git log -1 --pretty=format:"%an")
+AUTHOR_EMAIL=$(git log -1 --pretty=format:"%ae")
+COMMIT_MESSAGE=$(git log -1 --pretty=format:"%s")
+
+if echo "$AUTHOR_NAME $AUTHOR_EMAIL" | grep -q -i "copilot\|bot"; then
+    echo
+    print_info "🤖 Agent push detected: $AUTHOR_NAME"
+    
+    # Check if this looks like completed work
+    COMMIT_COUNT=$(git rev-list --count @{u}..HEAD 2>/dev/null || git rev-list --count HEAD)
+    FILES_CHANGED=$(git diff --name-only HEAD~1 2>/dev/null | wc -l || echo "0")
+    
+    if [ "$COMMIT_COUNT" -ge 1 ] && [ "$FILES_CHANGED" -ge 1 ]; then
+        echo
+        print_warning "📋 PR Creation Reminder for Agents:"
+        print_info "This push contains $COMMIT_COUNT commit(s) affecting $FILES_CHANGED file(s)"
+        print_info ""
+        print_info "🎯 CRITICAL: When creating PR, ensure it's READY (not draft):"
+        print_info ""
+        print_info "Step 1 - Verify work complete:"
+        print_info "  ✅ All deliverables met"
+        print_info "  ✅ Tests passing"
+        print_info "  ✅ Documentation updated"
+        print_info ""
+        print_info "Step 2 - Create READY PR:"
+        print_info "  gh pr create --title \"[type]: description\" --body-file .github/pull_request_template.md"
+        print_info ""
+        print_info "Step 3 - Verify status:"
+        print_info "  gh pr view <pr-number> --json isDraft"
+        print_info "  Should show: \"isDraft\": false"
+        print_info ""
+        print_info "Step 4 - Convert if needed:"
+        print_info "  gh pr ready <pr-number>"
+        print_info ""
+        print_warning "⚠️  DO NOT use --draft flag unless work is incomplete!"
+        print_info "📖 See .github/PR_STATUS_RULES.md for complete decision tree"
+        
+        # Check if there's already a PR for this branch
+        CURRENT_BRANCH=$(git branch --show-current)
+        if command -v gh >/dev/null 2>&1; then
+            EXISTING_PR=$(gh pr view --json number,isDraft 2>/dev/null || echo "")
+            if [ -n "$EXISTING_PR" ]; then
+                IS_DRAFT=$(echo "$EXISTING_PR" | grep -o '"isDraft":[^,}]*' | cut -d':' -f2 | tr -d ' ')
+                PR_NUMBER=$(echo "$EXISTING_PR" | grep -o '"number":[^,}]*' | cut -d':' -f2 | tr -d ' ')
+                
+                if [ "$IS_DRAFT" = "true" ]; then
+                    echo
+                    print_error "🚫 DRAFT PR DETECTED!"
+                    print_error "PR #$PR_NUMBER is currently in DRAFT status but work appears complete."
+                    print_error ""
+                    print_error "Required action before continuing:"
+                    print_error "  gh pr ready $PR_NUMBER"
+                    print_error ""
+                    print_error "This enforces our workflow rule: completed work = READY PR"
+                    print_error "Blocking push until PR status is corrected."
+                    exit 1
+                else
+                    print_success "Existing PR #$PR_NUMBER is correctly marked as READY"
+                fi
+            fi
+        fi
+        
+        echo
+    fi
+fi
+
+print_success "Pre-push checks completed! 🚀"
+echo
