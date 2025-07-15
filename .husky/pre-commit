@@ -1,12 +1,6 @@
 #!/usr/bin/env sh
 # Pre-commit hook for shmup-yours
-# Integrates with educational error message system in .github/hooks/
-
-. "$(dirname -- "$0")/_/husky.sh"
-
-#!/usr/bin/env sh
-# Pre-commit hook for shmup-yours
-# ESLint enforcement with educational error messages
+# Package manager enforcement + ESLint enforcement with educational error messages
 
 . "$(dirname -- "$0")/_/husky.sh"
 
