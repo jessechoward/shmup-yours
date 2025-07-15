@@ -260,10 +260,10 @@ export class TerrainRenderer {
         // Calculate tile range to render
         const startTileX = Math.max(0, Math.floor(viewportBounds.left / this.TILE_SIZE));
         const endTileX = Math.min(this.tilemap[0]?.length || 0, 
-                                 Math.ceil(viewportBounds.right / this.TILE_SIZE));
+            Math.ceil(viewportBounds.right / this.TILE_SIZE));
         const startTileY = Math.max(0, Math.floor(viewportBounds.top / this.TILE_SIZE));
         const endTileY = Math.min(this.tilemap.length, 
-                                 Math.ceil(viewportBounds.bottom / this.TILE_SIZE));
+            Math.ceil(viewportBounds.bottom / this.TILE_SIZE));
         
         // Render visible tiles
         for (let tileY = startTileY; tileY < endTileY; tileY++) {
@@ -290,7 +290,7 @@ export class TerrainRenderer {
         
         // Only render if tile is visible on screen
         if (this.coordinateSystem.rectIntersectsViewport(worldX, worldY, 
-                                                         this.TILE_SIZE, this.TILE_SIZE)) {
+            this.TILE_SIZE, this.TILE_SIZE)) {
             const color = this.tileColors[tileType];
             if (color) {
                 context.fillStyle = color;

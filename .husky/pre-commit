@@ -4,10 +4,11 @@
 
 . "$(dirname -- "$0")/_/husky.sh"
 
-# Source the error message functions
-source "$(git rev-parse --show-toplevel)/.github/hooks/error-messages.sh" 2>/dev/null || {
-    echo "Warning: Error message templates not found"
-}
+#!/usr/bin/env sh
+# Pre-commit hook for shmup-yours
+# ESLint enforcement with educational error messages
+
+. "$(dirname -- "$0")/_/husky.sh"
 
 # Performance tracking
 start_time=$(date +%s)
@@ -17,7 +18,11 @@ echo "🔍 Running pre-commit quality checks..."
 # Check for package manager consistency
 if [ -f "package-lock.json" ]; then
     echo ""
-    show_package_manager_error "npm" "yarn" "$(pwd)"
+    echo "❌ Package Manager Violation: npm lockfile detected"
+    echo "This project uses yarn workspaces. Please run:"
+    echo "  rm package-lock.json && yarn install"
+    echo ""
+    echo "🆘 Emergency override: git commit --no-verify"
     exit 1
 fi
 
@@ -29,20 +34,7 @@ yarn lint:staged
 lint_exit_code=$?
 if [ $lint_exit_code -ne 0 ]; then
     echo ""
-    # Try to determine the type of ESLint error
-    if ! command -v eslint >/dev/null 2>&1; then
-        show_eslint_error "configuration" "ESLint not installed" ""
-    else
-        # Check if it's a configuration issue
-        eslint --print-config package.json >/dev/null 2>&1
-        config_exit=$?
-        if [ $config_exit -ne 0 ]; then
-            show_eslint_error "configuration" "Invalid ESLint configuration" ""
-        else
-            show_eslint_error "violations" "Code style violations detected" "staged files"
-        fi
-    fi
-    
+    echo "❌ ESLint violations detected"
     echo ""
     echo "💡 Quick fixes to try:"
     echo "   yarn lint:fix           # Auto-fix many issues"
@@ -52,7 +44,7 @@ if [ $lint_exit_code -ne 0 ]; then
     echo "🆘 Emergency override (use sparingly):"
     echo "   git commit --no-verify  # Bypasses all hooks"
     echo ""
-    
+    echo "📖 Full documentation: docs/ESLINT_SETUP.md"
     exit 1
 fi
 
@@ -62,7 +54,7 @@ duration=$((end_time - start_time))
 
 if [ $duration -gt 30 ]; then
     echo ""
-    show_performance_error "timeout" "${duration}s" "30s"
+    echo "⚠️  Performance Warning: Hook took ${duration}s (target: <30s)"
     echo ""
     echo "💡 Performance tips:"
     echo "   - ESLint cache is enabled"

@@ -26,7 +26,7 @@ class BoundarySystem {
     
     /**
      * Initialize boundary system with map configuration
-     * @param {Object} boundaryConfig - Boundary configuration from MapGenerator
+     * @param {object} boundaryConfig - Boundary configuration from MapGenerator
      */
     initialize(boundaryConfig) {
         this.boundaries = boundaryConfig.boundaries;
@@ -84,7 +84,7 @@ class BoundarySystem {
     
     /**
      * Apply boundary forces to a player based on their position
-     * @param {Object} player - Player object with physics body
+     * @param {object} player - Player object with physics body
      */
     applyBoundaryForces(player) {
         if (!player.body || !player.body.isActive()) return;
@@ -108,26 +108,26 @@ class BoundarySystem {
     
     /**
      * Calculate distance from player to boundary
-     * @param {Object} playerPos - Player position {x, y}
-     * @param {Object} boundary - Boundary configuration
+     * @param {object} playerPos - Player position {x, y}
+     * @param {object} boundary - Boundary configuration
      * @returns {number} Distance to boundary edge
      */
     calculateDistanceToBoundary(playerPos, boundary) {
         let distance = 0;
         
         switch (boundary.direction) {
-            case 'down': // Top boundary
-                distance = Math.max(0, boundary.y + boundary.height - playerPos.y);
-                break;
-            case 'up': // Bottom boundary
-                distance = Math.max(0, playerPos.y - boundary.y);
-                break;
-            case 'right': // Left boundary
-                distance = Math.max(0, boundary.x + boundary.width - playerPos.x);
-                break;
-            case 'left': // Right boundary
-                distance = Math.max(0, playerPos.x - boundary.x);
-                break;
+        case 'down': // Top boundary
+            distance = Math.max(0, boundary.y + boundary.height - playerPos.y);
+            break;
+        case 'up': // Bottom boundary
+            distance = Math.max(0, playerPos.y - boundary.y);
+            break;
+        case 'right': // Left boundary
+            distance = Math.max(0, boundary.x + boundary.width - playerPos.x);
+            break;
+        case 'left': // Right boundary
+            distance = Math.max(0, playerPos.x - boundary.x);
+            break;
         }
         
         return distance;
@@ -136,8 +136,8 @@ class BoundarySystem {
     /**
      * Calculate force to apply based on distance to boundary
      * @param {number} distance - Distance to boundary
-     * @param {Object} boundary - Boundary configuration
-     * @returns {Object} Force vector {x, y}
+     * @param {object} boundary - Boundary configuration
+     * @returns {object} Force vector {x, y}
      */
     calculateBoundaryForce(distance, boundary) {
         // Force increases exponentially as player gets closer to boundary
@@ -154,8 +154,8 @@ class BoundarySystem {
     
     /**
      * Trigger visual warning when player approaches boundary
-     * @param {Object} player - Player object
-     * @param {Object} boundary - Boundary configuration
+     * @param {object} player - Player object
+     * @param {object} boundary - Boundary configuration
      * @param {number} distance - Distance to boundary
      */
     triggerBoundaryWarning(player, boundary, distance) {
@@ -172,22 +172,22 @@ class BoundarySystem {
     
     /**
      * Check if position is within valid play area
-     * @param {Object} position - Position to check {x, y}
+     * @param {object} position - Position to check {x, y}
      * @returns {boolean} True if position is within boundaries
      */
     isWithinBoundaries(position) {
         return this.boundaries.every(boundary => {
             switch (boundary.direction) {
-                case 'down': // Top boundary
-                    return position.y > boundary.y + boundary.height;
-                case 'up': // Bottom boundary
-                    return position.y < boundary.y;
-                case 'right': // Left boundary
-                    return position.x > boundary.x + boundary.width;
-                case 'left': // Right boundary
-                    return position.x < boundary.x;
-                default:
-                    return true;
+            case 'down': // Top boundary
+                return position.y > boundary.y + boundary.height;
+            case 'up': // Bottom boundary
+                return position.y < boundary.y;
+            case 'right': // Left boundary
+                return position.x > boundary.x + boundary.width;
+            case 'left': // Right boundary
+                return position.x < boundary.x;
+            default:
+                return true;
             }
         });
     }
@@ -224,7 +224,7 @@ class BoundarySystem {
     
     /**
      * Handle boundary sensor events (called by physics contact listener)
-     * @param {Object} contact - Planck.js contact object
+     * @param {object} contact - Planck.js contact object
      * @param {boolean} began - True if contact began, false if ended
      */
     handleBoundaryContact(contact, began) {
@@ -259,7 +259,7 @@ class BoundarySystem {
     
     /**
      * Called when player enters boundary zone
-     * @param {Object} playerBody - Planck.js player body
+     * @param {object} playerBody - Planck.js player body
      * @param {number} boundaryIndex - Index of boundary
      */
     onPlayerEnterBoundary(playerBody, boundaryIndex) {
@@ -272,7 +272,7 @@ class BoundarySystem {
     
     /**
      * Called when player leaves boundary zone
-     * @param {Object} playerBody - Planck.js player body
+     * @param {object} playerBody - Planck.js player body
      * @param {number} boundaryIndex - Index of boundary
      */
     onPlayerLeaveBoundary(playerBody, boundaryIndex) {
