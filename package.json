@@ -5,5 +5,12 @@
     "frontend",
     "backend",
     "test"
-  ]
+  ],
+  "devDependencies": {
+    "husky": "^9.1.7",
+    "jest": "^30.0.4"
+  },
+  "scripts": {
+    "prepare": "husky"
+  }
 }
