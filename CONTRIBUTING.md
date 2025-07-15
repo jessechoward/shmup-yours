@@ -163,6 +163,39 @@ gitGraph
 - [GitHub Actions](https://docs.github.com/en/actions)
 - [Semantic Versioning](https://semver.org/)
 
+## Package Manager Enforcement
+
+This project enforces the use of **Yarn** as the package manager to ensure consistent dependency resolution across all environments. A pre-commit hook automatically validates package manager usage.
+
+### Yarn Requirements
+- ✅ Use `yarn install` instead of `npm install`
+- ✅ Use `yarn add <package>` instead of `npm install <package>`
+- ✅ Use `yarn <script>` instead of `npm run <script>`
+- ❌ **Never** commit `package-lock.json` files (they are automatically ignored)
+- ✅ Always commit `yarn.lock` when dependencies change
+
+### Pre-commit Hook Protection
+The pre-commit hook automatically:
+- **Blocks commits** containing `package-lock.json` files
+- **Warns** about npm commands in package.json scripts
+- **Validates** that `yarn.lock` exists when dependencies are present
+- **Provides** educational error messages with fix instructions
+
+### Example Fix Instructions
+If the hook fails, you'll see helpful guidance like:
+```bash
+❌ package-lock.json files detected in the repository!
+
+ℹ️  To fix this issue:
+  1. Remove the package-lock.json file(s):
+     rm "./package-lock.json"
+  2. Use 'yarn install' instead of 'npm install'
+  3. Use 'yarn add <package>' instead of 'npm install <package>'
+```
+
+### Performance
+The hook is designed to execute quickly (typically <100ms) to avoid slowing down the development workflow.
+
 ---
 
 For questions or help, open an issue or ask in the project discussions!
