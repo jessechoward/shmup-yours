@@ -3,6 +3,42 @@
 ## 🎯 Review Objective
 Evaluate implemented feature from user experience and product perspective.
 
+## 🚀 Development Environment Setup
+**Quality Gates Activation:**
+```bash
+# Enable Husky hooks for quality enforcement
+yarn install  # Installs dependencies including hook infrastructure
+yarn workspace backend install
+yarn workspace frontend install
+
+# Verify quality gates are active
+yarn lint:all    # Should run ESLint across all workspaces
+yarn test:all    # Should run tests (if configured)
+```
+
+**Hook Verification:**
+```bash
+# Test that quality gates are working
+echo "console.log('test')" > temp-test-file.js
+git add temp-test-file.js
+git commit -m "test quality gates" --dry-run
+# Should trigger linting and other quality checks
+rm temp-test-file.js
+```
+
+## 🛡️ Quality Gate Compliance
+**Pre-Review Validation:**
+- [ ] Quality hooks are active and functional
+- [ ] Review environment is operational
+- [ ] Documentation tools are available
+- [ ] Workspace isolation is maintained (yarn workspaces)
+
+**Violation Resolution:**
+- Educational error messages will guide you to quick fixes
+- 90% of violations have copy-paste resolution commands
+- Escalate after 5 minutes if resolution unclear
+- Reference: `.github/hooks/README.md` for detailed guidance
+
 ## 📋 Implementation to Review
 **Feature Task:** #123 (link to completed implementation)  
 **Component:** `frontend/src/components/[ComponentName].js`  
@@ -67,8 +103,14 @@ Evaluate implemented feature from user experience and product perspective.
 - Consider alternative approaches
 - May need user story refinement
 
+**Resolution Playbook References:**
+- Package Manager Issues: `.github/hooks/package-manager-errors.md`
+- ESLint/Quality Issues: `.github/hooks/eslint-errors.md`  
+- Performance Issues: `.github/hooks/performance-errors.md`
+- Emergency Procedures: `.github/hooks/emergency-overrides.md`
+
 ---
 **Time Box:** 15-30 minutes  
 **Role:** Technical Product Manager  
 **Focus:** User experience and product value  
-**Output:** Clear direction for next steps
+**Output:** Clear direction for next steps, quality hooks compliant

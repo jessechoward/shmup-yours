@@ -10,6 +10,22 @@ This directory contains educational error message templates that transform Git h
 - **Performance Focused**: Target 90% self-resolution rate
 - **Consistent Terminology**: Align with workflow patterns from `.copilot-instructions.md`
 
+## Resolution Playbook System
+
+### 🎯 Primary Entry Point
+**[hook-violation-resolution.md]** - Start here for all hook failures. Provides systematic diagnosis with decision trees to route to specific resolution templates.
+
+### 🔧 Specialized Resolution Templates
+1. **[package-manager-errors.md]** - Yarn vs npm violations, lockfile conflicts
+2. **[eslint-errors.md]** - Code quality issues, linting rule violations
+3. **[performance-errors.md]** - Hook timeout, memory, and slow execution issues
+4. **[yarn-lock-conflict-resolution.md]** - Dependency conflicts and lockfile problems
+5. **[emergency-overrides.md]** - Safe bypass procedures for critical situations
+
+### 🛡️ Prevention and Setup
+1. **[pre-commit-setup-validation.md]** - Hook installation, configuration, and troubleshooting
+2. **[commit-quality-checklist.md]** - Proactive quality checks to prevent violations
+
 ## Message Categories
 
 ### 🔧 Primary Focus Areas
@@ -106,12 +122,16 @@ Each error message template follows this structure:
 
 ```
 .github/hooks/
-├── README.md                    # This overview file
-├── error-messages.sh           # Shared error message functions
-├── package-manager-errors.md   # Yarn vs npm violations
-├── eslint-errors.md            # Code quality violations  
-├── performance-errors.md       # Hook performance issues
-└── emergency-overrides.md      # Override procedures
+├── README.md                           # This overview file
+├── error-messages.sh                  # Shared error message functions
+├── hook-violation-resolution.md       # 🎯 PRIMARY: Systematic diagnosis and resolution
+├── package-manager-errors.md          # Yarn vs npm violations
+├── eslint-errors.md                   # Code quality violations  
+├── performance-errors.md              # Hook performance issues
+├── emergency-overrides.md             # Override procedures
+├── yarn-lock-conflict-resolution.md   # Dependency conflict resolution
+├── pre-commit-setup-validation.md     # Hook installation and validation
+└── commit-quality-checklist.md        # Prevention strategies and quality gates
 ```
 
 ## Contributing to Error Messages

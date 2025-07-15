@@ -3,6 +3,17 @@
 ## 🔍 Validation Objective
 Review created tasks to ensure they meet 5-minute scope and quality standards.
 
+## 🛡️ Quality Gate Compliance
+**Pre-Validation:**
+- [ ] Quality hooks are active and functional
+- [ ] Documentation tools are available
+
+**Resolution Playbook References:**
+- Package Manager Issues: `.github/hooks/package-manager-errors.md`
+- ESLint/Quality Issues: `.github/hooks/eslint-errors.md`
+- Performance Issues: `.github/hooks/performance-errors.md`
+- Emergency Procedures: `.github/hooks/emergency-overrides.md`
+
 ## 📋 Tasks to Validate
 **Task Creation Output:** #123  
 **Tasks Created:**
