@@ -5,7 +5,12 @@
   "type": "module",
   "main": "src/index.js",
   "description": "Frontend SPA for shmup-yours",
-  "keywords": ["shmup-yours", "frontend", "spa", "canvas"],
+  "keywords": [
+    "shmup-yours",
+    "frontend",
+    "spa",
+    "canvas"
+  ],
   "author": "jessechoward",
   "license": "MIT",
   "scripts": {

@@ -4,7 +4,12 @@
   "private": true,
   "main": "src/index.js",
   "description": "Backend game server for shmup-yours",
-  "keywords": ["shmup-yours", "backend", "nodejs", "server"],
+  "keywords": [
+    "shmup-yours",
+    "backend",
+    "nodejs",
+    "server"
+  ],
   "author": "jessechoward",
   "license": "MIT",
   "scripts": {
