@@ -1,5 +1,8 @@
 # Pull Request
 
+**📋 PR Status**: [Ready for Review / Draft]  
+**ℹ️ Status Help**: See `.github/PR_STATUS_RULES.md` for decision tree
+
 ## Issue Reference
 Closes #[issue-number]
 
