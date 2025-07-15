@@ -56,11 +56,23 @@ git checkout -b feature/15-multiplayer-lobby
 ### 1. Automatic PR Creation
 When Copilot completes implementation:
 ```bash
+# Create PR as ready for review (default for completed work)
 gh pr create --title "Feature: Multiplayer lobby system" \
   --body-file .github/pull_request_template.md \
   --base main \
   --head feature/15-multiplayer-lobby
+
+# Only use --draft for work-in-progress that needs intermediate feedback
+gh pr create --draft --title "WIP: Multiplayer lobby system" \
+  --body-file .github/pull_request_template.md \
+  --base main \
+  --head feature/15-multiplayer-lobby
 ```
+
+**⚠️ PR Status Guidelines:**
+- **Ready for Review** (default): Use when work is complete and ready for human review
+- **Draft**: Only use for work-in-progress that needs intermediate feedback or collaboration
+- **GitHub Copilot Standard**: Create as ready for review unless explicitly building incrementally
 
 ### 2. PR Requirements
 - **Issue Linking:** Must include "Closes #[issue-number]"
