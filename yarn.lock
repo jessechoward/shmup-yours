@@ -942,6 +942,8 @@ __metadata:
 "@shmup-yours/frontend@workspace:frontend":
   version: 0.0.0-use.local
   resolution: "@shmup-yours/frontend@workspace:frontend"
+  dependencies:
+    serve: "npm:^14.2.4"
   languageName: unknown
   linkType: soft
 
@@ -952,9 +954,9 @@ __metadata:
   linkType: soft
 
 "@sinclair/typebox@npm:^0.34.0":
-  version: 0.34.37
-  resolution: "@sinclair/typebox@npm:0.34.37"
-  checksum: 10c0/22fff01853d8f35e8a1f0be004e91a0c3ced16f35b8d7e915392e91bf021190bcba45102cd148679c53440c4ed228b31d7a2635461ea5d089ef581f6254ecfb4
+  version: 0.34.38
+  resolution: "@sinclair/typebox@npm:0.34.38"
+  checksum: 10c0/c1b9a1547c64de01ff5c89351baf289d2d5f19cfef3ae30fe4748a103eb58d0842618318543cd3de964cb0370d5a859e24aba231ade9b43ee2ef4d0bb4db7084
   languageName: node
   linkType: hard
 
@@ -1915,9 +1917,9 @@ __metadata:
   linkType: hard
 
 "electron-to-chromium@npm:^1.5.173":
-  version: 1.5.183
-  resolution: "electron-to-chromium@npm:1.5.183"
-  checksum: 10c0/052cb9d53ff84451ad719a9f6c8c50a66a9128623288b84a389e270a863819ce00b437716294370e28907c461604b0b3d738f1e4a92535bca0f9351b0a8e2180
+  version: 1.5.186
+  resolution: "electron-to-chromium@npm:1.5.186"
+  checksum: 10c0/08b59a337eced18b9553ccbafab90303ecf2f53d50a5c09bfcb8db56ed4d0819776f2fe90b5036cc5626ee1876d9c5985c98170489e4b3291dc20f8ae15d3315
   languageName: node
   linkType: hard
 
@@ -3959,9 +3961,9 @@ __metadata:
   linkType: hard
 
 "picomatch@npm:^4.0.2":
-  version: 4.0.2
-  resolution: "picomatch@npm:4.0.2"
-  checksum: 10c0/7c51f3ad2bb42c776f49ebf964c644958158be30d0a510efd5a395e8d49cb5acfed5b82c0c5b365523ce18e6ab85013c9ebe574f60305892ec3fa8eee8304ccc
+  version: 4.0.3
+  resolution: "picomatch@npm:4.0.3"
+  checksum: 10c0/9582c951e95eebee5434f59e426cddd228a7b97a0161a375aed4be244bd3fe8e3a31b846808ea14ef2c8a2527a6eeab7b3946a67d5979e81694654f939473ae2
   languageName: node
   linkType: hard
 
