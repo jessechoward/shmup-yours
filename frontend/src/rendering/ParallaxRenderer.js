@@ -23,7 +23,7 @@ export class ParallaxRenderer {
                 scrollRate: 0.1,
                 starCount: 50,
                 starSizes: [1, 2],
-                starColors: ['#666', '#888'],
+                starColors: ['#ccc', '#fff'],
                 density: 0.3 // Sparse
             },
             background2: {
@@ -31,7 +31,7 @@ export class ParallaxRenderer {
                 scrollRate: 0.3,
                 starCount: 80,
                 starSizes: [1, 2, 3],
-                starColors: ['#888', '#aaa', '#ccc'],
+                starColors: ['#ddd', '#fff', '#ffffaa'],
                 density: 0.5 // Medium
             },
             background3: {
@@ -39,7 +39,7 @@ export class ParallaxRenderer {
                 scrollRate: 0.6,
                 starCount: 120,
                 starSizes: [2, 3, 4],
-                starColors: ['#aaa', '#ccc', '#fff'],
+                starColors: ['#fff', '#ffffaa', '#aaffff'],
                 density: 0.7 // Dense
             }
         };
