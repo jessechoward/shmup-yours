@@ -29,10 +29,10 @@ yarn dev
 ```
 
 ### Controls
-- **WASD**: Manual camera movement
-- **Arrow Keys**: Ship movement  
-- **Mouse Drag**: Pan camera
-- **Space**: Toggle demo on/off
+- **← → Arrow Keys**: Rotate ship left/right
+- **↑ Up Arrow**: Thrust forward (physics-based acceleration)  
+- **Space**: Fire bullets (max 3/second with range limit)
+- **Camera**: Automatically follows player with smooth movement
 
 ## Architecture Documentation
 

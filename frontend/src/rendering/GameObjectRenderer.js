@@ -235,7 +235,7 @@ export class GameObjectRenderer {
     }
     
     /**
-     * Render a triangle (typically for ships)
+     * Render a triangle (typically for ships) with shield circle
      * @param {CanvasRenderingContext2D} context - Canvas context
      * @param {object} config - Object type configuration
      * @param {object} object - Game object
@@ -243,7 +243,22 @@ export class GameObjectRenderer {
     renderTriangle(context, config, object) {
         const size = object.size || config.size;
         const color = object.color || config.color;
+        const shieldRadius = object.shieldRadius || size;
         
+        // Draw shield circle first (behind triangle)
+        if (object.shieldRadius) {
+            context.strokeStyle = color;
+            context.lineWidth = 2;
+            context.globalAlpha = 0.5; // More visible shield circle
+            
+            context.beginPath();
+            context.arc(0, 0, shieldRadius, 0, Math.PI * 2);
+            context.stroke();
+            
+            context.globalAlpha = 1; // Reset alpha for triangle
+        }
+        
+        // Draw triangle (ship)
         context.fillStyle = color;
         context.strokeStyle = '#fff';
         context.lineWidth = 1;

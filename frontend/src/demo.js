@@ -33,14 +33,24 @@ class RenderingDemo {
         this.cameraVelocity = { x: 50, y: 30 }; // pixels per second
         this.cameraDirection = { x: 1, y: 1 };
         
-        // Demo objects
+        // Demo objects - Player ship with physics properties
         this.demoShip = {
             x: 1024,
             y: 768,
             rotation: 0,
+            velocity: { x: 0, y: 0 },
+            maxSpeed: 400, // Increased for testing
+            acceleration: 600, // Increased for testing
+            rotationSpeed: 6, // Increased for testing
             type: 'SHIP_PLAYER',
-            size: 16
+            size: 16,
+            shieldRadius: 20
         };
+        
+        // Bullet system
+        this.bullets = [];
+        this.lastBulletTime = 0;
+        this.bulletFireRate = 333; // 3 bullets per second (1000ms / 3 = 333ms)
         
         this.projectiles = [];
         this.effects = [];
@@ -118,10 +128,10 @@ class RenderingDemo {
         document.addEventListener('keydown', (e) => {
             this.keys[e.code] = true;
             
-            // Toggle demo on/off with spacebar
+            // Fire bullet with spacebar
             if (e.code === 'Space') {
                 e.preventDefault();
-                this.toggleDemo();
+                this.fireBullet();
             }
         });
         
@@ -129,48 +139,49 @@ class RenderingDemo {
             this.keys[e.code] = false;
         });
         
-        // Mouse controls for camera
-        let isDragging = false;
-        let lastMouseX = 0;
-        let lastMouseY = 0;
-        
-        document.addEventListener('mousedown', (e) => {
-            isDragging = true;
-            lastMouseX = e.clientX;
-            lastMouseY = e.clientY;
-        });
-        
-        document.addEventListener('mousemove', (e) => {
-            if (isDragging) {
-                const deltaX = e.clientX - lastMouseX;
-                const deltaY = e.clientY - lastMouseY;
-                
-                const cameraPos = this.coordinateSystem.getCameraPosition();
-                this.coordinateSystem.setCameraPosition(
-                    cameraPos.x - deltaX * 2,
-                    cameraPos.y - deltaY * 2
-                );
-                this.layerManager.setCameraPosition(cameraPos.x - deltaX * 2, cameraPos.y - deltaY * 2);
-                
-                lastMouseX = e.clientX;
-                lastMouseY = e.clientY;
-            }
-        });
-        
-        document.addEventListener('mouseup', () => {
-            isDragging = false;
-        });
+        // Note: Removed mouse controls for camera - camera now follows player automatically
     }
     
     /**
-     * Toggle demo on/off
+     * Fire a bullet from the player ship
      */
-    toggleDemo() {
-        if (this.isRunning) {
-            this.stopDemo();
-        } else {
-            this.startDemo();
+    fireBullet() {
+        const currentTime = performance.now();
+        
+        // Rate limiting: max 3 bullets per second
+        if (currentTime - this.lastBulletTime < this.bulletFireRate) {
+            return;
         }
+        
+        this.lastBulletTime = currentTime;
+        
+        // Calculate bullet spawn position (tip of the ship)
+        const shipTipDistance = this.demoShip.size / 2 + 5;
+        const bulletX = this.demoShip.x + Math.cos(this.demoShip.rotation) * shipTipDistance;
+        const bulletY = this.demoShip.y + Math.sin(this.demoShip.rotation) * shipTipDistance;
+        
+        // Calculate bullet velocity (1.5x max ship speed)
+        const bulletSpeed = this.demoShip.maxSpeed * 1.5;
+        const bulletVelocity = {
+            x: Math.cos(this.demoShip.rotation) * bulletSpeed,
+            y: Math.sin(this.demoShip.rotation) * bulletSpeed
+        };
+        
+        const bullet = {
+            x: bulletX,
+            y: bulletY,
+            vx: bulletVelocity.x,
+            vy: bulletVelocity.y,
+            type: 'PROJECTILE_BULLET',
+            age: 0,
+            maxAge: 2000, // 2 seconds at bullet speed = ~600 pixels range
+            maxRange: 600,
+            startX: bulletX,
+            startY: bulletY
+        };
+        
+        this.gameObjectRenderer.addObject('projectiles', bullet);
+        this.bullets.push(bullet);
     }
     
     /**
@@ -180,12 +191,12 @@ class RenderingDemo {
         this.isRunning = true;
         this.lastFrameTime = performance.now();
         this.renderLoop();
-        console.log('Canvas 5-Layer Rendering Demo Started');
+        console.log('Space Shooter Demo Started');
         console.log('Controls:');
-        console.log('- WASD: Move camera');
-        console.log('- Arrow Keys: Move ship');
-        console.log('- Mouse drag: Pan camera');
-        console.log('- Space: Toggle demo');
+        console.log('- ← → Arrow Keys: Rotate ship');
+        console.log('- ↑ Up Arrow: Thrust forward');
+        console.log('- Space: Fire bullets (max 3/second)');
+        console.log('- Camera follows player automatically');
     }
     
     /**
@@ -222,120 +233,169 @@ class RenderingDemo {
         // Handle input
         this.handleInput();
         
-        // Update camera movement (automatic demo movement)
-        if (!this.isManualControl()) {
-            this.updateCameraMovement();
-        }
-        
         // Update game objects
         this.gameObjectRenderer.updateObjects(this.deltaTime);
         
-        // Spawn new projectiles occasionally
+        // Update bullets with range checking
+        this.updateBullets();
+        
+        // Spawn new projectiles occasionally (for demo)
         if (Math.random() < 0.02) {
             this.spawnProjectile();
         }
         
-        // Spawn new effects occasionally
+        // Spawn new effects occasionally (for demo)
         if (Math.random() < 0.01) {
             this.spawnExplosion();
         }
         
-        // Update ship rotation
-        this.demoShip.rotation += this.deltaTime * 0.002;
-        
-        // Add thrust effect behind ship
-        const thrustEffect = {
-            x: this.demoShip.x - Math.cos(this.demoShip.rotation) * 12,
-            y: this.demoShip.y - Math.sin(this.demoShip.rotation) * 12,
-            type: 'EFFECT_THRUST',
-            intensity: 0.7 + Math.random() * 0.3,
-            rotation: this.demoShip.rotation + Math.PI,
-            age: 0,
-            maxAge: 100
-        };
-        
-        this.gameObjectRenderer.addObject('effects', thrustEffect);
+        // Add thrust effect behind ship when thrusting
+        if (this.keys['ArrowUp']) {
+            const thrustEffect = {
+                x: this.demoShip.x - Math.cos(this.demoShip.rotation) * 15,
+                y: this.demoShip.y - Math.sin(this.demoShip.rotation) * 15,
+                type: 'EFFECT_THRUST',
+                intensity: 0.7 + Math.random() * 0.3,
+                rotation: this.demoShip.rotation + Math.PI,
+                age: 0,
+                maxAge: 150
+            };
+            
+            this.gameObjectRenderer.addObject('effects', thrustEffect);
+        }
     }
     
     /**
-     * Handle keyboard input
+     * Handle keyboard input for space shooter controls
      */
     handleInput() {
-        const cameraPos = this.coordinateSystem.getCameraPosition();
-        const moveSpeed = this.deltaTime * 0.3;
-        let moved = false;
+        const deltaSeconds = this.deltaTime * 0.001;
         
-        // Camera movement with WASD
-        if (this.keys['KeyW']) {
-            this.coordinateSystem.setCameraPosition(cameraPos.x, cameraPos.y - moveSpeed);
-            moved = true;
-        }
-        if (this.keys['KeyS']) {
-            this.coordinateSystem.setCameraPosition(cameraPos.x, cameraPos.y + moveSpeed);
-            moved = true;
-        }
-        if (this.keys['KeyA']) {
-            this.coordinateSystem.setCameraPosition(cameraPos.x - moveSpeed, cameraPos.y);
-            moved = true;
-        }
-        if (this.keys['KeyD']) {
-            this.coordinateSystem.setCameraPosition(cameraPos.x + moveSpeed, cameraPos.y);
-            moved = true;
-        }
-        
-        // Ship movement with arrow keys
-        const shipMoveSpeed = this.deltaTime * 0.2;
-        if (this.keys['ArrowUp']) {
-            this.demoShip.y -= shipMoveSpeed;
-        }
-        if (this.keys['ArrowDown']) {
-            this.demoShip.y += shipMoveSpeed;
-        }
+        // Ship rotation with Left/Right arrows
         if (this.keys['ArrowLeft']) {
-            this.demoShip.x -= shipMoveSpeed;
+            this.demoShip.rotation -= this.demoShip.rotationSpeed * deltaSeconds;
         }
         if (this.keys['ArrowRight']) {
-            this.demoShip.x += shipMoveSpeed;
+            this.demoShip.rotation += this.demoShip.rotationSpeed * deltaSeconds;
         }
         
-        // Update layer manager camera position if moved
-        if (moved) {
-            const newPos = this.coordinateSystem.getCameraPosition();
-            this.layerManager.setCameraPosition(newPos.x, newPos.y);
+        // Ship thrust with Up arrow (physics-based acceleration)
+        if (this.keys['ArrowUp']) {
+            // Apply thrust in the direction the ship is facing
+            const thrustX = Math.cos(this.demoShip.rotation) * this.demoShip.acceleration * deltaSeconds;
+            const thrustY = Math.sin(this.demoShip.rotation) * this.demoShip.acceleration * deltaSeconds;
+            
+            this.demoShip.velocity.x += thrustX;
+            this.demoShip.velocity.y += thrustY;
+            
+            // Cap velocity to max speed
+            const currentSpeed = Math.sqrt(
+                this.demoShip.velocity.x ** 2 + this.demoShip.velocity.y ** 2
+            );
+            if (currentSpeed > this.demoShip.maxSpeed) {
+                const scale = this.demoShip.maxSpeed / currentSpeed;
+                this.demoShip.velocity.x *= scale;
+                this.demoShip.velocity.y *= scale;
+            }
         }
+        
+        // Apply momentum/inertia and damping
+        this.updateShipPhysics(deltaSeconds);
+        
+        // Update camera to follow player
+        this.updatePlayerFollowingCamera();
     }
     
     /**
-     * Check if user is manually controlling camera
+     * Update ship physics with momentum and damping
      */
-    isManualControl() {
-        return this.keys['KeyW'] || this.keys['KeyS'] || this.keys['KeyA'] || this.keys['KeyD'];
-    }
-    
-    /**
-     * Update automatic camera movement for demo
-     */
-    updateCameraMovement() {
+    updateShipPhysics(deltaSeconds) {
+        // Apply velocity to position
+        this.demoShip.x += this.demoShip.velocity.x * deltaSeconds;
+        this.demoShip.y += this.demoShip.velocity.y * deltaSeconds;
+        
+        // Apply damping (space friction)
+        const damping = 0.98; // Slight damping for realistic space feel
+        this.demoShip.velocity.x *= damping;
+        this.demoShip.velocity.y *= damping;
+        
+        // Check world boundaries and apply collision
         const worldBounds = this.coordinateSystem.getWorldBounds();
+        const radius = this.demoShip.shieldRadius;
+        
+        if (this.demoShip.x - radius < 0) {
+            this.demoShip.x = radius;
+            this.demoShip.velocity.x = Math.abs(this.demoShip.velocity.x) * 0.5; // Bounce with energy loss
+        }
+        if (this.demoShip.x + radius > worldBounds.width) {
+            this.demoShip.x = worldBounds.width - radius;
+            this.demoShip.velocity.x = -Math.abs(this.demoShip.velocity.x) * 0.5;
+        }
+        if (this.demoShip.y - radius < 0) {
+            this.demoShip.y = radius;
+            this.demoShip.velocity.y = Math.abs(this.demoShip.velocity.y) * 0.5;
+        }
+        if (this.demoShip.y + radius > worldBounds.height) {
+            this.demoShip.y = worldBounds.height - radius;
+            this.demoShip.velocity.y = -Math.abs(this.demoShip.velocity.y) * 0.5;
+        }
+    }
+    
+    /**
+     * Update camera to follow player with map edge constraints
+     */
+    updatePlayerFollowingCamera() {
+        const worldBounds = this.coordinateSystem.getWorldBounds();
+        const viewport = { width: 1024, height: 768 }; // Fixed viewport size
+        
+        // Calculate desired camera position (center player on screen)
+        let desiredCameraX = this.demoShip.x - viewport.width / 2;
+        let desiredCameraY = this.demoShip.y - viewport.height / 2;
+        
+        // Clamp camera to world boundaries
+        desiredCameraX = Math.max(0, Math.min(desiredCameraX, worldBounds.width - viewport.width));
+        desiredCameraY = Math.max(0, Math.min(desiredCameraY, worldBounds.height - viewport.height));
+        
+        // Apply smooth camera following (lerp for smoothness)
         const cameraPos = this.coordinateSystem.getCameraPosition();
+        const lerpFactor = 0.2; // Smooth but responsive following
+        const newCameraX = cameraPos.x + (desiredCameraX - cameraPos.x) * lerpFactor;
+        const newCameraY = cameraPos.y + (desiredCameraY - cameraPos.y) * lerpFactor;
         
-        // Bounce camera around the world for demo
-        let newX = cameraPos.x + this.cameraVelocity.x * this.deltaTime * 0.001;
-        let newY = cameraPos.y + this.cameraVelocity.y * this.deltaTime * 0.001;
-        
-        // Bounce off world boundaries
-        if (newX <= 512 || newX >= worldBounds.width - 512) {
-            this.cameraDirection.x *= -1;
-            this.cameraVelocity.x = this.cameraDirection.x * (30 + Math.random() * 40);
+        // Update camera position
+        this.coordinateSystem.setCameraPosition(newCameraX, newCameraY);
+        this.layerManager.setCameraPosition(newCameraX, newCameraY);
+    }
+    
+    /**
+     * Update bullets with range checking and cleanup
+     */
+    updateBullets() {
+        for (let i = this.bullets.length - 1; i >= 0; i--) {
+            const bullet = this.bullets[i];
+            
+            // Check range limit
+            const distanceFromStart = Math.sqrt(
+                (bullet.x - bullet.startX) ** 2 + 
+                (bullet.y - bullet.startY) ** 2
+            );
+            
+            if (distanceFromStart >= bullet.maxRange) {
+                // Remove bullet that exceeded range
+                this.gameObjectRenderer.removeObject('projectiles', bullet);
+                this.bullets.splice(i, 1);
+                continue;
+            }
+            
+            // Check world boundary collision
+            const worldBounds = this.coordinateSystem.getWorldBounds();
+            if (bullet.x < 0 || bullet.x > worldBounds.width || 
+                bullet.y < 0 || bullet.y > worldBounds.height) {
+                this.gameObjectRenderer.removeObject('projectiles', bullet);
+                this.bullets.splice(i, 1);
+                continue;
+            }
         }
-        
-        if (newY <= 384 || newY >= worldBounds.height - 384) {
-            this.cameraDirection.y *= -1;
-            this.cameraVelocity.y = this.cameraDirection.y * (20 + Math.random() * 30);
-        }
-        
-        this.coordinateSystem.setCameraPosition(newX, newY);
-        this.layerManager.setCameraPosition(newX, newY);
     }
     
     /**
