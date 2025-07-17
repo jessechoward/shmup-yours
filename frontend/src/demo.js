@@ -28,6 +28,7 @@ class RenderingDemo {
         this.isRunning = false;
         this.lastFrameTime = 0;
         this.deltaTime = 0;
+        this.animationFrameId = null;
         
         // Camera movement for demo
         this.cameraVelocity = { x: 50, y: 30 }; // pixels per second
@@ -75,6 +76,12 @@ class RenderingDemo {
     initializeDemo() {
         // Add demo ship
         this.gameObjectRenderer.addObject('ships', this.demoShip);
+        
+        // Initialize camera to center on player (calculate top-left offset)
+        const initialCameraX = this.demoShip.x - 1024 / 2; // Center player horizontally
+        const initialCameraY = this.demoShip.y - 768 / 2;  // Center player vertically
+        this.coordinateSystem.setCameraPosition(initialCameraX, initialCameraY);
+        this.layerManager.setCameraPosition(initialCameraX, initialCameraY);
         
         // Add some sample projectiles
         for (let i = 0; i < 10; i++) {
@@ -124,19 +131,23 @@ class RenderingDemo {
      * Set up event listeners for controls
      */
     setupEventListeners() {
-        // Keyboard controls
+        // Keyboard controls - just track key state, don't handle actions here
         document.addEventListener('keydown', (e) => {
             this.keys[e.code] = true;
             
-            // Fire bullet with spacebar
-            if (e.code === 'Space') {
+            // Prevent default for game keys
+            if (e.code === 'Space' || e.code === 'ArrowLeft' || e.code === 'ArrowRight' || e.code === 'ArrowUp') {
                 e.preventDefault();
-                this.fireBullet();
             }
         });
         
         document.addEventListener('keyup', (e) => {
             this.keys[e.code] = false;
+        });
+        
+        // Cleanup on page unload to prevent server shutdown issues
+        window.addEventListener('beforeunload', () => {
+            this.stopDemo();
         });
         
         // Note: Removed mouse controls for camera - camera now follows player automatically
@@ -204,6 +215,10 @@ class RenderingDemo {
      */
     stopDemo() {
         this.isRunning = false;
+        if (this.animationFrameId) {
+            cancelAnimationFrame(this.animationFrameId);
+            this.animationFrameId = null;
+        }
         console.log('Canvas 5-Layer Rendering Demo Stopped');
     }
     
@@ -223,7 +238,7 @@ class RenderingDemo {
         this.updateUI();
         
         // Continue loop
-        requestAnimationFrame(() => this.renderLoop());
+        this.animationFrameId = requestAnimationFrame(() => this.renderLoop());
     }
     
     /**
@@ -251,9 +266,11 @@ class RenderingDemo {
         
         // Add thrust effect behind ship when thrusting
         if (this.keys['ArrowUp']) {
+            // Calculate thrust position from the rear center of the ship
+            const thrustDistance = this.demoShip.size / 2 + 3; // Distance from ship center to rear
             const thrustEffect = {
-                x: this.demoShip.x - Math.cos(this.demoShip.rotation) * 15,
-                y: this.demoShip.y - Math.sin(this.demoShip.rotation) * 15,
+                x: this.demoShip.x - Math.cos(this.demoShip.rotation) * thrustDistance,
+                y: this.demoShip.y - Math.sin(this.demoShip.rotation) * thrustDistance,
                 type: 'EFFECT_THRUST',
                 intensity: 0.7 + Math.random() * 0.3,
                 rotation: this.demoShip.rotation + Math.PI,
@@ -299,6 +316,11 @@ class RenderingDemo {
             }
         }
         
+        // Continuous bullet firing with Space (rate limited)
+        if (this.keys['Space']) {
+            this.fireBullet();
+        }
+        
         // Apply momentum/inertia and damping
         this.updateShipPhysics(deltaSeconds);
         
@@ -315,7 +337,7 @@ class RenderingDemo {
         this.demoShip.y += this.demoShip.velocity.y * deltaSeconds;
         
         // Apply damping (space friction)
-        const damping = 0.98; // Slight damping for realistic space feel
+        const damping = 0.995; // Very low damping for space feel
         this.demoShip.velocity.x *= damping;
         this.demoShip.velocity.y *= damping;
         
@@ -348,17 +370,17 @@ class RenderingDemo {
         const worldBounds = this.coordinateSystem.getWorldBounds();
         const viewport = { width: 1024, height: 768 }; // Fixed viewport size
         
-        // Calculate desired camera position (center player on screen)
+        // Calculate desired camera position (top-left offset to center player on screen)
         let desiredCameraX = this.demoShip.x - viewport.width / 2;
         let desiredCameraY = this.demoShip.y - viewport.height / 2;
         
-        // Clamp camera to world boundaries
+        // Clamp camera to world boundaries (classic 2D camera system)
         desiredCameraX = Math.max(0, Math.min(desiredCameraX, worldBounds.width - viewport.width));
         desiredCameraY = Math.max(0, Math.min(desiredCameraY, worldBounds.height - viewport.height));
         
         // Apply smooth camera following (lerp for smoothness)
         const cameraPos = this.coordinateSystem.getCameraPosition();
-        const lerpFactor = 0.2; // Smooth but responsive following
+        const lerpFactor = 0.8; // More responsive following
         const newCameraX = cameraPos.x + (desiredCameraX - cameraPos.x) * lerpFactor;
         const newCameraY = cameraPos.y + (desiredCameraY - cameraPos.y) * lerpFactor;
         

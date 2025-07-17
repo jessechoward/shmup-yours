@@ -21,27 +21,43 @@ export class ParallaxRenderer {
             background1: {
                 stars: [],
                 scrollRate: 0.1,
-                starCount: 50,
-                starSizes: [1, 2],
-                starColors: ['#ccc', '#fff'],
-                density: 0.3 // Sparse
+                starCount: 500, // Many more distant stars
+                starSizes: [1], // Only 1-pixel stars for distant background
+                starColors: ['#777', '#888', '#999'], // Dimmed further for subtle background
+                density: 0.3, // Sparse
+                // Continuous scrolling for cosmic drift
+                autonomousScrollX: 5,  // pixels per second - slow horizontal drift
+                autonomousScrollY: -2  // pixels per second - slight upward drift
             },
             background2: {
                 stars: [],
                 scrollRate: 0.3,
-                starCount: 80,
-                starSizes: [1, 2, 3],
-                starColors: ['#ddd', '#fff', '#ffffaa'],
-                density: 0.5 // Medium
+                starCount: 400, // More mid-distance stars
+                starSizes: [1, 1, 2], // Mostly 1-pixel, some 2-pixel
+                starColors: ['#999', '#aaa', '#bbb'], // Moderate brightness for mid-range
+                density: 0.5, // Medium
+                // Different direction for depth variation
+                autonomousScrollX: -8, // pixels per second - moderate leftward drift
+                autonomousScrollY: 3   // pixels per second - slight downward drift
             },
             background3: {
                 stars: [],
                 scrollRate: 0.6,
-                starCount: 120,
-                starSizes: [2, 3, 4],
-                starColors: ['#fff', '#ffffaa', '#aaffff'],
-                density: 0.7 // Dense
+                starCount: 300, // More foreground stars
+                starSizes: [1, 2], // Small foreground stars
+                starColors: ['#aaa', '#ccc', '#ddd'], // Dimmed from bright foreground
+                density: 0.7, // Dense
+                // Opposite direction from background layers for contrasting depth
+                autonomousScrollX: -12, // pixels per second - leftward drift (opposite of back layers)
+                autonomousScrollY: 5    // pixels per second - downward drift (opposite of back layers)
             }
+        };
+        
+        // Track cumulative autonomous offset for each layer
+        this.autonomousOffsets = {
+            background1: { x: 0, y: 0 },
+            background2: { x: 0, y: 0 },
+            background3: { x: 0, y: 0 }
         };
         
         this.generateStarFields();
@@ -82,7 +98,7 @@ export class ParallaxRenderer {
                 y: Math.random() * fieldHeight - fieldHeight / 4,
                 size: sizes[Math.floor(Math.random() * sizes.length)],
                 color: colors[Math.floor(Math.random() * colors.length)],
-                opacity: 0.3 + Math.random() * 0.7, // Varying brightness
+                opacity: 0.6 + Math.random() * 0.4, // Higher brightness for visibility
                 twinkle: Math.random() * Math.PI * 2 // For animation
             };
             stars.push(star);
@@ -112,15 +128,42 @@ export class ParallaxRenderer {
         // Clear the layer
         this.layerManager.clearLayer(layerName);
         
-        // Get parallax offset
-        const offset = this.coordinateSystem.getParallaxOffset(layer.scrollRate);
-        const viewportBounds = this.coordinateSystem.getViewportBounds();
+        // Update autonomous scrolling offset
+        if (!this.autonomousOffsets[layerName]) {
+            this.autonomousOffsets[layerName] = { x: 0, y: 0 };
+        }
         
-        // Render stars
+        this.autonomousOffsets[layerName].x += layer.autonomousScrollX * deltaTime / 1000;
+        this.autonomousOffsets[layerName].y += layer.autonomousScrollY * deltaTime / 1000;
+        
+        // Render stars with combined camera and autonomous movement
         for (const star of layer.stars) {
+            // Apply both camera parallax and autonomous scrolling
             const screenPos = this.coordinateSystem.worldToScreenParallax(
                 star.x, star.y, layer.scrollRate
             );
+            
+            // Add autonomous scrolling offset
+            screenPos.x += this.autonomousOffsets[layerName].x;
+            screenPos.y += this.autonomousOffsets[layerName].y;
+            
+            // Wrap stars around screen edges for continuous scrolling
+            const viewportWidth = this.layerManager.VIEWPORT_WIDTH;
+            const viewportHeight = this.layerManager.VIEWPORT_HEIGHT;
+            
+            // Horizontal wrapping
+            if (screenPos.x > viewportWidth + star.size) {
+                screenPos.x -= viewportWidth + star.size * 2;
+            } else if (screenPos.x < -star.size) {
+                screenPos.x += viewportWidth + star.size * 2;
+            }
+            
+            // Vertical wrapping
+            if (screenPos.y > viewportHeight + star.size) {
+                screenPos.y -= viewportHeight + star.size * 2;
+            } else if (screenPos.y < -star.size) {
+                screenPos.y += viewportHeight + star.size * 2;
+            }
             
             // Only render stars that are visible (with margin for smooth scrolling)
             if (this.isStarVisible(screenPos.x, screenPos.y, star.size)) {
@@ -158,31 +201,31 @@ export class ParallaxRenderer {
         // Animate twinkle effect
         star.twinkle += deltaTime * 0.002;
         const twinkleIntensity = (Math.sin(star.twinkle) + 1) * 0.5;
-        const alpha = star.opacity * (0.7 + twinkleIntensity * 0.3);
+        const alpha = star.opacity * (0.8 + twinkleIntensity * 0.2); // Less dimming, more visible
         
         context.globalAlpha = alpha;
         context.fillStyle = star.color;
         
-        // Draw star based on size
+        // Draw star based on size - use floating point for smooth movement
         if (star.size <= 2) {
-            // Small stars - just pixels
-            context.fillRect(Math.floor(x), Math.floor(y), star.size, star.size);
+            // Small stars - just pixels with sub-pixel positioning
+            context.fillRect(x, y, star.size, star.size);
         } else {
-            // Larger stars - draw as plus signs
-            const halfSize = Math.floor(star.size / 2);
+            // Larger stars - draw as plus signs with sub-pixel positioning
+            const halfSize = star.size / 2;
             
             // Horizontal line
             context.fillRect(
-                Math.floor(x - halfSize), 
-                Math.floor(y), 
+                x - halfSize, 
+                y, 
                 star.size, 
                 1
             );
             
             // Vertical line
             context.fillRect(
-                Math.floor(x), 
-                Math.floor(y - halfSize), 
+                x, 
+                y - halfSize, 
                 1, 
                 star.size
             );

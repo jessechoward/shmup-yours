@@ -41,22 +41,22 @@ export class GameObjectRenderer {
             },
             PROJECTILE_MISSILE: {
                 color: '#ff8800',
-                size: 5,
+                size: 4, // Reduced from 5 to be closer to bullets
                 shape: 'rectangle'
             },
             EFFECT_EXPLOSION: {
                 color: '#ff4400',
-                size: 20,
+                size: 12, // Reduced from 20
                 shape: 'explosion'
             },
             EFFECT_THRUST: {
                 color: '#4488ff',
-                size: 8,
+                size: 5, // Reduced from 8
                 shape: 'thrust'
             },
             PICKUP_HEALTH: {
                 color: '#44ff44',
-                size: 8,
+                size: 6, // Reduced from 8
                 shape: 'plus'
             }
         };
@@ -67,6 +67,15 @@ export class GameObjectRenderer {
         // Performance tracking
         this.renderedObjects = 0;
         this.culledObjects = 0;
+    }
+    
+    /**
+     * Round to 2 decimal places for deterministic sub-pixel positioning
+     * @param {number} value - Value to round
+     * @returns {number} Value rounded to 2 decimal places
+     */
+    roundToTwoDecimals(value) {
+        return Math.round(value * 100) / 100;
     }
     
     /**
@@ -195,7 +204,11 @@ export class GameObjectRenderer {
         const screenPos = this.coordinateSystem.worldToScreen(object.x, object.y);
         
         context.save();
-        context.translate(screenPos.x, screenPos.y);
+        // Use 2-decimal-place rounding for smooth but deterministic positioning
+        context.translate(
+            this.roundToTwoDecimals(screenPos.x), 
+            this.roundToTwoDecimals(screenPos.y)
+        );
         
         // Apply rotation if object has it
         if (object.rotation !== undefined) {
@@ -258,15 +271,15 @@ export class GameObjectRenderer {
             context.globalAlpha = 1; // Reset alpha for triangle
         }
         
-        // Draw triangle (ship)
+        // Draw triangle (ship) - oriented to point right (forward direction)
         context.fillStyle = color;
         context.strokeStyle = '#fff';
         context.lineWidth = 1;
         
         context.beginPath();
-        context.moveTo(0, -size / 2);
-        context.lineTo(-size / 3, size / 2);
-        context.lineTo(size / 3, size / 2);
+        context.moveTo(size / 2, 0);        // Tip points right (forward)
+        context.lineTo(-size / 2, -size / 3); // Back left
+        context.lineTo(-size / 2, size / 3);  // Back right
         context.closePath();
         
         context.fill();
@@ -358,11 +371,11 @@ export class GameObjectRenderer {
         context.globalAlpha *= intensity * flicker;
         context.fillStyle = config.color;
         
-        // Draw flame shape
+        // Draw flame shape pointing backward (left when ship points right)
         context.beginPath();
-        context.moveTo(0, size / 2);
-        context.lineTo(-size / 4, size);
-        context.lineTo(size / 4, size);
+        context.moveTo(-size, 0); // Flame tip points left (backward)
+        context.lineTo(-size / 2, -size / 3); // Top of flame base
+        context.lineTo(-size / 2, size / 3);  // Bottom of flame base
         context.closePath();
         context.fill();
     }

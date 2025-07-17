@@ -198,11 +198,12 @@ export class CanvasLayerManager {
      * @returns {{left: number, top: number, right: number, bottom: number}}
      */
     getViewportBounds() {
+        // Camera position is top-left offset, so bounds are straightforward
         return {
-            left: this.cameraX - this.VIEWPORT_WIDTH / 2,
-            top: this.cameraY - this.VIEWPORT_HEIGHT / 2,
-            right: this.cameraX + this.VIEWPORT_WIDTH / 2,
-            bottom: this.cameraY + this.VIEWPORT_HEIGHT / 2
+            left: this.cameraX,
+            top: this.cameraY,
+            right: this.cameraX + this.VIEWPORT_WIDTH,
+            bottom: this.cameraY + this.VIEWPORT_HEIGHT
         };
     }
     

@@ -53,6 +53,15 @@ export class TerrainRenderer {
     }
     
     /**
+     * Round to 2 decimal places for deterministic sub-pixel positioning
+     * @param {number} value - Value to round
+     * @returns {number} Value rounded to 2 decimal places
+     */
+    roundToTwoDecimals(value) {
+        return Math.round(value * 100) / 100;
+    }
+    
+    /**
      * Generate sample terrain for testing
      */
     generateSampleTerrain() {
@@ -79,8 +88,8 @@ export class TerrainRenderer {
      * @param {number} tilesY - Number of tiles vertically
      */
     addSampleObstacles(tilesX, tilesY) {
-        // Create some asteroid clusters
-        for (let cluster = 0; cluster < 5; cluster++) {
+        // Create more asteroid clusters (doubled from 5 to 10)
+        for (let cluster = 0; cluster < 10; cluster++) {
             const centerX = Math.floor(Math.random() * (tilesX - 10)) + 5;
             const centerY = Math.floor(Math.random() * (tilesY - 10)) + 5;
             const radius = 2 + Math.floor(Math.random() * 3);
@@ -88,16 +97,16 @@ export class TerrainRenderer {
             this.addAsteroidCluster(centerX, centerY, radius);
         }
         
-        // Add some pipe structures
-        for (let pipe = 0; pipe < 3; pipe++) {
+        // Add more pipe structures (doubled from 3 to 6)
+        for (let pipe = 0; pipe < 6; pipe++) {
             const startX = Math.floor(Math.random() * (tilesX - 20)) + 10;
             const startY = Math.floor(Math.random() * (tilesY - 20)) + 10;
             
             this.addPipeStructure(startX, startY);
         }
         
-        // Add debris fields
-        for (let field = 0; field < 8; field++) {
+        // Add more debris fields (doubled from 8 to 16)
+        for (let field = 0; field < 16; field++) {
             const x = Math.floor(Math.random() * tilesX);
             const y = Math.floor(Math.random() * tilesY);
             const size = 2 + Math.floor(Math.random() * 4);
@@ -294,9 +303,13 @@ export class TerrainRenderer {
             const color = this.tileColors[tileType];
             if (color) {
                 context.fillStyle = color;
+                // Use 2-decimal-place rounding for smooth but deterministic positioning
+                const roundedX = this.roundToTwoDecimals(screenPos.x);
+                const roundedY = this.roundToTwoDecimals(screenPos.y);
+                
                 context.fillRect(
-                    Math.floor(screenPos.x),
-                    Math.floor(screenPos.y),
+                    roundedX,
+                    roundedY,
                     this.TILE_SIZE,
                     this.TILE_SIZE
                 );
@@ -305,8 +318,8 @@ export class TerrainRenderer {
                 context.strokeStyle = '#333';
                 context.lineWidth = 1;
                 context.strokeRect(
-                    Math.floor(screenPos.x),
-                    Math.floor(screenPos.y),
+                    roundedX,
+                    roundedY,
                     this.TILE_SIZE,
                     this.TILE_SIZE
                 );

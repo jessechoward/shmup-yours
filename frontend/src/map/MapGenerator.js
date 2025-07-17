@@ -24,11 +24,11 @@ class MapGenerator {
         this.MIN_SCREENS = 2;
         this.MAX_SCREENS = 5;
         
-        // Obstacle density parameters
+        // Obstacle density parameters (doubled for more challenging gameplay)
         this.OBSTACLE_DENSITY = {
-            LOW: 0.15,    // 15% coverage
-            MEDIUM: 0.25, // 25% coverage  
-            HIGH: 0.35    // 35% coverage
+            LOW: 0.30,    // 30% coverage (doubled from 15%)
+            MEDIUM: 0.50, // 50% coverage (doubled from 25%)
+            HIGH: 0.70    // 70% coverage (doubled from 35%)
         };
         
         // Boundary parameters

@@ -24,16 +24,14 @@ export class CoordinateSystem {
     }
     
     /**
-     * Set camera position in world coordinates
-     * @param {number} x - World X coordinate
-     * @param {number} y - World Y coordinate
+     * Set camera position in world coordinates (top-left offset)
+     * @param {number} x - Camera X offset (top-left corner)
+     * @param {number} y - Camera Y offset (top-left corner)
      */
     setCameraPosition(x, y) {
-        // Clamp camera to world bounds
-        this.cameraX = Math.max(this.VIEWPORT_WIDTH / 2, 
-            Math.min(this.worldWidth - this.VIEWPORT_WIDTH / 2, x));
-        this.cameraY = Math.max(this.VIEWPORT_HEIGHT / 2, 
-            Math.min(this.worldHeight - this.VIEWPORT_HEIGHT / 2, y));
+        // Clamp camera to world bounds (classic 2D camera system)
+        this.cameraX = Math.max(0, Math.min(this.worldWidth - this.VIEWPORT_WIDTH, x));
+        this.cameraY = Math.max(0, Math.min(this.worldHeight - this.VIEWPORT_HEIGHT, y));
     }
     
     /**
@@ -52,8 +50,8 @@ export class CoordinateSystem {
      */
     worldToScreen(worldX, worldY) {
         return {
-            x: worldX - this.cameraX + this.VIEWPORT_WIDTH / 2,
-            y: worldY - this.cameraY + this.VIEWPORT_HEIGHT / 2
+            x: worldX - this.cameraX,
+            y: worldY - this.cameraY
         };
     }
     
@@ -65,8 +63,8 @@ export class CoordinateSystem {
      */
     screenToWorld(screenX, screenY) {
         return {
-            x: screenX + this.cameraX - this.VIEWPORT_WIDTH / 2,
-            y: screenY + this.cameraY - this.VIEWPORT_HEIGHT / 2
+            x: screenX + this.cameraX,
+            y: screenY + this.cameraY
         };
     }
     
@@ -75,14 +73,12 @@ export class CoordinateSystem {
      * @returns {{left: number, top: number, right: number, bottom: number}}
      */
     getViewportBounds() {
-        const halfWidth = this.VIEWPORT_WIDTH / 2;
-        const halfHeight = this.VIEWPORT_HEIGHT / 2;
-        
+        // Camera position is top-left offset, so bounds are straightforward
         return {
-            left: this.cameraX - halfWidth,
-            top: this.cameraY - halfHeight,
-            right: this.cameraX + halfWidth,
-            bottom: this.cameraY + halfHeight
+            left: this.cameraX,
+            top: this.cameraY,
+            right: this.cameraX + this.VIEWPORT_WIDTH,
+            bottom: this.cameraY + this.VIEWPORT_HEIGHT
         };
     }
     
