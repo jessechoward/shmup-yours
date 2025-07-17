@@ -9,6 +9,7 @@
   "type": "module",
   "devDependencies": {
     "@eslint/js": "^9.5.0",
+    "canvas": "^3.1.2",
     "eslint": "^9.5.0",
     "husky": "^9.1.7",
     "jest": "^30.0.4",
@@ -22,7 +23,8 @@
     "lint": "eslint . --cache",
     "lint:fix": "eslint . --fix --cache",
     "lint:all": "yarn workspaces run lint",
-    "lint:staged": "lint-staged"
+    "lint:staged": "lint-staged",
+    "generate:ship-sprites": "node scripts/assets/generate-ship-sprites.js"
   },
   "lint-staged": {
     "*.js": [
