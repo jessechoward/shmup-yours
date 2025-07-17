@@ -23,9 +23,9 @@ This frontend implements a **5-layer Canvas rendering pipeline** optimized for r
 
 ### Run Demo
 ```bash
-cd frontend/src
-python3 -m http.server 8080
-# Open http://localhost:8080
+cd frontend
+yarn dev
+# Open http://localhost:3000
 ```
 
 ### Controls

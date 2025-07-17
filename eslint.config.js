@@ -49,17 +49,9 @@ export default [
             'require-await': 'warn',
             'no-return-await': 'error',
             
-            // JSDoc instead of TypeScript (project standard)
-            'valid-jsdoc': ['warn', {
-                requireReturn: false,
-                requireReturnDescription: false,
-                preferType: {
-                    'Boolean': 'boolean',
-                    'Number': 'number',
-                    'String': 'string',
-                    'Object': 'object'
-                }
-            }]
+            // JSDoc documentation encouraged but not enforced
+            // Note: valid-jsdoc rule removed in ESLint v9, using alternatives
+            'require-jsdoc': 'off'
         }
     },
     
