@@ -14,7 +14,7 @@
   "author": "jessechoward",
   "license": "MIT",
   "scripts": {
-    "dev": "serve src -p 3000",
+    "dev": "serve src -l 3000",
     "lint": "eslint src/ --cache",
     "lint:fix": "eslint src/ --fix --cache"
   },
