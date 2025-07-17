@@ -27,11 +27,13 @@ rm temp-test-file.js
 ```
 
 ## 🛡️ Quality Gate Compliance
-**Pre-Documentation Validation:**
-- [ ] Quality hooks are active and functional
-- [ ] Documentation tools are available
-- [ ] Workspace isolation is maintained (yarn workspaces)
-- [ ] Markdown linting is configured (if applicable)
+
+## ⚠️ Pull Request Creation Timing (CRITICAL)
+**PRs must only be created after documentation is complete, all tests pass, and quality gates are met.**
+
+**Do NOT open a PR at the start of work.**
+
+See `.github/COPILOT_WORKFLOW.md` for authoritative rules.
 
 **Violation Resolution:**
 - Educational error messages will guide you to quick fixes

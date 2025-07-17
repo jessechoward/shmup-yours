@@ -27,11 +27,13 @@ rm temp-test-file.js
 ```
 
 ## 🛡️ Quality Gate Compliance
-**Pre-Implementation Validation:**
-- [ ] Quality hooks are active and functional
-- [ ] ESLint configuration is working (`yarn lint:all`)
-- [ ] Test infrastructure is operational (if applicable)
-- [ ] Workspace isolation is maintained (yarn workspaces)
+
+## ⚠️ Pull Request Creation Timing (CRITICAL)
+**PRs must only be created after implementation is complete, all tests pass, and documentation is updated.**
+
+**Do NOT open a PR at the start of work.**
+
+See `.github/COPILOT_WORKFLOW.md` for authoritative rules.
 
 **Common Quality Violations & Quick Fixes:**
 ```bash
