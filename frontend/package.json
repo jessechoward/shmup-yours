@@ -14,7 +14,11 @@
   "author": "jessechoward",
   "license": "MIT",
   "scripts": {
+<<<<<<< HEAD
     "dev": "serve src -l 3000",
+=======
+    "dev": "serve src -p 3000",
+>>>>>>> Implement Node.js-based frontend dev server, remove Python dependency
     "lint": "eslint src/ --cache",
     "lint:fix": "eslint src/ --fix --cache"
   },
