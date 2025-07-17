@@ -134,9 +134,9 @@ yarn install
 
 # Development environment
 docker-compose up -d
-yarn dev:backend    # Start backend server
-yarn dev:frontend   # Start frontend dev server
-yarn test:all       # Run full test suite
+# Backend server (if available) 
+cd frontend && yarn dev     # Start frontend dev server
+yarn test:all       # Run full test suite (if available)
 ```
 
 ### Useful Commands
@@ -146,9 +146,9 @@ yarn tasks:list           # Show available task templates
 yarn tasks:create [type]  # Create new task from template
 
 # Development
-yarn workspace backend dev      # Backend development server
-yarn workspace frontend dev    # Frontend development server
-yarn workspace test run        # E2E test execution
+# yarn workspace @shmup-yours/backend dev      # Backend development server (if available)
+yarn workspace @shmup-yours/frontend dev    # Frontend development server
+# yarn workspace @shmup-yours/test run        # E2E test execution (if available)
 
 # Quality assurance
 yarn lint:all              # Lint all workspaces
